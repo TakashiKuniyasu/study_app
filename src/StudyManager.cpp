@@ -94,3 +94,17 @@ void StudyManager::loadFromFile(){
         records.push_back(data);
     }
 }
+void StudyManager::searchContent(){
+    std::string word;
+    std::vector<StudyRecord> searchWordRecord;
+    std::cout << "Input Search Word" << std::endl;
+    std::cin >> word;
+    for(const StudyRecord& record: records){
+        if(record.getContent() == word){
+            searchWordRecord.push_back(record);
+        }
+    }
+    for(const StudyRecord& record : searchWordRecord){
+        record.show();
+    }
+}

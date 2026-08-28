@@ -11,6 +11,7 @@ public:
     void showTotalMinutes() const;
     void deleteRecord();
     void loadFromFile();
+    void searchContent();
 private:
     void saveToFile() const;
     int prevID=0;

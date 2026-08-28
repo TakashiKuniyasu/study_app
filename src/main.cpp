@@ -7,6 +7,7 @@ enum class menu{
     Record =1,
     Watch,
     Delete,
+    Search,
     Exit
 };
 
@@ -22,7 +23,8 @@ int main(){
         std::cout << "１．学習を記録する" << std::endl;
         std::cout << "２．学習記録を見る" << std::endl;
         std::cout << "３．学習記録を削除する" << std::endl;
-        std::cout << "４．終了" << std::endl;
+        std::cout << "4.Serch content word" << std::endl;
+        std::cout << "5．終了" << std::endl;
 
         std::cin >> num;
         while((std::cin.fail())||(num < 1 || num > 4)){
@@ -49,6 +51,11 @@ int main(){
         case menu::Delete:
         {
             manager.deleteRecord();
+            break;
+        }
+        case menu::Search:
+        {
+            manager.searchContent();
             break;
         }
         case menu::Exit:
