@@ -27,10 +27,10 @@ int main(){
         std::cout << "5．終了" << std::endl;
 
         std::cin >> num;
-        while((std::cin.fail())||(num < 1 || num > 4)){
+        while((std::cin.fail())||(num < 1 || num > 5)){
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(),'\n');
-            std::cout << "1〜4を入力してください" << std::endl;
+            std::cout << "1〜5を入力してください" << std::endl;
             std::cin >> num;
         }
         menu menu_num;
