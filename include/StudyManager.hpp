@@ -12,6 +12,7 @@ public:
     void deleteRecord();
     void loadFromFile();
     void searchContent();
+    void editPrevData();
 private:
     void saveToFile() const;
     int prevID=0;

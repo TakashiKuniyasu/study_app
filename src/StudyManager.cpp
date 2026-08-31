@@ -109,3 +109,26 @@ void StudyManager::searchContent(){
         std::cout << "学習内容が見つかりませんでした" << std::endl;
     }
 }
+void StudyManager::editPrevData(){
+    int id;
+    std::string sid;
+    std::cout << "編集したいIDを指定してください" << std::endl;
+    std::cin >> sid;
+
+    try{
+        id = std::stoi(sid);
+    }catch(...){
+        std::cout << "IDが指定の形式ではありません" << std::endl;
+        return;
+    }
+
+    for(StudyRecord& record: records){
+        if(id == record.getID()){
+            record.input(id);
+            std::cout << "次のように編集しました" << std::endl;
+            record.show();
+            saveToFile();
+            break;
+        }
+    }
+}

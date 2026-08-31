@@ -8,6 +8,7 @@ enum class menu{
     Watch,
     Delete,
     Search,
+    Edit,
     Exit
 };
 
@@ -24,13 +25,14 @@ int main(){
         std::cout << "２．学習記録を見る" << std::endl;
         std::cout << "３．学習記録を削除する" << std::endl;
         std::cout << "４．学習記録を検索する" << std::endl;
-        std::cout << "５．終了" << std::endl;
+        std::cout << "５．学習記録を編集する" << std::endl;
+        std::cout << "６．終了" << std::endl;
 
         std::cin >> num;
-        while((std::cin.fail())||(num < 1 || num > 5)){
+        while((std::cin.fail())||(num < 1 || num > 6)){
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(),'\n');
-            std::cout << "1〜5を入力してください" << std::endl;
+            std::cout << "1〜6を入力してください" << std::endl;
             std::cin >> num;
         }
         menu menu_num;
@@ -56,6 +58,11 @@ int main(){
         case menu::Search:
         {
             manager.searchContent();
+            break;
+        }
+        case menu::Edit:
+        {
+            manager.editPrevData();
             break;
         }
         case menu::Exit:
