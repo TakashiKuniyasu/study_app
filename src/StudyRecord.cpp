@@ -118,7 +118,7 @@ bool StudyRecord::checkDate(std::string date){
             check = false;
         }
     }
-    if(getline(ss, sbuf, '/' )){
+    if(!ss.eof()){
         std::cout << "入力が正しくありません" << std::endl;
         return false;
     }
