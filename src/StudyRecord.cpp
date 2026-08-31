@@ -139,9 +139,20 @@ bool StudyRecord::judgeExistDay(int year, int month, int day){
 
         Month m = static_cast<Month>(month);
         if(m == Month::February){
-            if((year % 4 != 0) && (day == 29)){
-                return false;
+            bool loopyear =
+            ((year % 400 == 0) ||
+            ((year % 4  == 0) && (year % 100 != 0)));
+
+            if(loopyear){
+                if(day > 29){
+                    return false;
+                }
+            }else{
+                if(day > 28){
+                    return false;
+                }
             }
+            
         }
 
         if((m == Month::April) || 
