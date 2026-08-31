@@ -54,7 +54,6 @@ std::string StudyRecord::getContent() const{
 }
 
 bool StudyRecord::checkDate(std::string date){
-    bool check = true;
     std::stringstream ss(date);
     std::string sbuf;
     int ibuf;
@@ -79,7 +78,7 @@ bool StudyRecord::checkDate(std::string date){
             return false;
         }
         if((ibuf > 2026) || (ibuf < 2000)){
-            check = false;
+            return false;
         }else{
             year = ibuf;
         }
@@ -102,7 +101,7 @@ bool StudyRecord::checkDate(std::string date){
             return false;
         }
         if((ibuf < 1) || (ibuf > 12)){
-            check = false;
+            return false;
         }else{
             month = ibuf;
         }
@@ -125,7 +124,7 @@ bool StudyRecord::checkDate(std::string date){
             return false;
         }
         if((ibuf < 1) || (ibuf > 31)){
-            check = false;
+            return false;
         }else{
             day = ibuf;
         }
@@ -134,27 +133,24 @@ bool StudyRecord::checkDate(std::string date){
         std::cout << "入力が正しくありません" << std::endl;
         return false;
     }
-    check = judgeExistDay(year, month, day);
-    return check;
+    return judgeExistDay(year, month, day);
 }
 bool StudyRecord::judgeExistDay(int year, int month, int day){
-    for(auto i=1; i<13; i++){
-        Month j;
-        j = static_cast<Month>(i);
-        if(j == Month::February){
+
+        Month m = static_cast<Month>(month);
+        if(m == Month::February){
             if((year % 4 != 0) && (day == 29)){
                 return false;
             }
         }
 
-        if((j == Month::April) || 
-           (j == Month::June) ||
-           (j == Month::September) ||
-           (j == Month::November)){
+        if((m == Month::April) || 
+           (m == Month::June) ||
+           (m == Month::September) ||
+           (m == Month::November)){
             if(day == 31){
                 return false;
             }
            }
-    }
     return true;
 }
