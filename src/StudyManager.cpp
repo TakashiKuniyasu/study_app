@@ -96,12 +96,16 @@ void StudyManager::loadFromFile(){
 }
 void StudyManager::searchContent(){
     std::string word;
-    std::vector<StudyRecord> searchWordRecord;
+    bool found = false;
     std::cout << "検索する学習内容を入力してください" << std::endl;
     std::cin >> word;
     for(const StudyRecord& record: records){
         if(record.getContent().find(word) != std::string::npos){
             record.show();
+            found = true;
         }
+    }
+    if(found == false){
+        std::cout << "学習内容が見つかりませんでした" << std::endl;
     }
 }
