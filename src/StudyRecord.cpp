@@ -62,8 +62,7 @@ bool StudyRecord::checkDate(std::string date){
     if(!getline(ss, sbuf, '/' )){
         std::cout << "入力が正しくありません" << std::endl;
         return false;
-    }
-    if(getline(ss, sbuf, '/' )){
+    }else{
         try{
             ibuf = stoi(sbuf);
         }catch(...){
@@ -78,11 +77,11 @@ bool StudyRecord::checkDate(std::string date){
         std::cout << "入力が正しくありません" << std::endl;
         return false;
     }
-    if(getline(ss, sbuf, '/' )){
+    else{
         try{
             ibuf = stoi(sbuf);
         }catch(...){
-            std::cout << "入力が正しくありません。" << std::endl;
+            std::cout << "入力が正しくありません" << std::endl;
             return false;
         }
         if((ibuf < 1) || (ibuf > 12)){
@@ -93,11 +92,11 @@ bool StudyRecord::checkDate(std::string date){
         std::cout << "入力が正しくありません" << std::endl;
         return false;
     }
-    if(getline(ss, sbuf, '/' )){
+    else{
         try{
             ibuf = stoi(sbuf);
         }catch(...){
-            std::cout << "入力が正しくありません。" << std::endl;
+            std::cout << "入力が正しくありません" << std::endl;
             return false;
         }
         if((ibuf < 1) || (ibuf > 31)){
