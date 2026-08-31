@@ -9,6 +9,7 @@ add_executable(study_app
     src/main.cpp
     src/StudyRecord.cpp
     src/StudyManager.cpp
+    src/MainManager.cpp
 )
 
 target_include_directories(study_app PRIVATE include)
