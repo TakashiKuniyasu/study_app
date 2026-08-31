@@ -1,17 +1,24 @@
 #include <string>
 #include <iostream>
 #include <limits>
+#include <ctime>
+#include <sstream>
 #include "StudyRecord.hpp"
 
 void StudyRecord::input(int id){
 
     ID = id;
-
     std::cout << "学習内容を入力してください" << std::endl;
     std::cin >> content;
 
     std::cout << "日付を入力してください" << std::endl;
     std::cin >> date; 
+    auto checkflg = checkDate(date);
+    while(!checkflg){
+        std::cout << "正しい日付を入力してください" << std::endl;
+        std::cin >> date;        
+        checkflg = checkDate(date);
+    }
 
     std::cout << "学習時間を入力してください" << std::endl;
     std::cin >> minute;
@@ -44,4 +51,31 @@ std::string StudyRecord::getDate() const{
 
 std::string StudyRecord::getContent() const{
     return content;
+}
+
+bool StudyRecord::checkDate(std::string date){
+    bool check = true;
+    std::stringstream ss(date);
+    std::string sbuf;
+    int ibuf;
+    
+    if(getline(ss, sbuf, '/' )){
+        ibuf = stoi(sbuf);
+        if((ibuf > 2026) || (ibuf < 2000)){
+            check = false;
+        }
+    }
+    if(getline(ss, sbuf, '/' )){
+        ibuf = stoi(sbuf);
+        if((ibuf < 0) || (ibuf > 12)){
+            check = false;
+        }
+    }
+    if(getline(ss, sbuf, '/' )){
+        ibuf = stoi(sbuf);
+        if((ibuf < 0) || (ibuf > 31)){
+            check = false;
+        }
+    }
+    return check;
 }

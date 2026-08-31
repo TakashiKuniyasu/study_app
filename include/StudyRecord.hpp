@@ -25,4 +25,5 @@ public:
     int getID() const;
     std::string getDate() const;
     std::string getContent() const;
+    bool checkDate(std::string);
 };
