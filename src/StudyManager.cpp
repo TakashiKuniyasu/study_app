@@ -97,7 +97,7 @@ void StudyManager::loadFromFile(){
 void StudyManager::searchContent(){
     std::string word;
     std::vector<StudyRecord> searchWordRecord;
-    std::cout << "Input Search Word" << std::endl;
+    std::cout << "検索する学習内容を入力してください" << std::endl;
     std::cin >> word;
     for(const StudyRecord& record: records){
         if(record.getContent() == word){
