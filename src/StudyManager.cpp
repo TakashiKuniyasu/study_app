@@ -100,11 +100,8 @@ void StudyManager::searchContent(){
     std::cout << "検索する学習内容を入力してください" << std::endl;
     std::cin >> word;
     for(const StudyRecord& record: records){
-        if(record.getContent() == word){
-            searchWordRecord.push_back(record);
+        if(record.getContent().find(word) != std::string::npos){
+            record.show();
         }
-    }
-    for(const StudyRecord& record : searchWordRecord){
-        record.show();
     }
 }
