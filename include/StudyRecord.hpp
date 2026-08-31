@@ -1,6 +1,20 @@
 #pragma once
 #include <string>
 
+enum class Month{
+    January=1,
+    February,
+    March,
+    April,
+    May,
+    June,
+    July,
+    August,
+    September,
+    October,
+    November,
+    December
+};
 class StudyRecord{
 private:
     int ID;
@@ -26,4 +40,5 @@ public:
     std::string getDate() const;
     std::string getContent() const;
     bool checkDate(std::string);
+    bool judgeExistDay(int, int, int);
 };

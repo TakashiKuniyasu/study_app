@@ -58,7 +58,11 @@ bool StudyRecord::checkDate(std::string date){
     std::stringstream ss(date);
     std::string sbuf;
     int ibuf;
+    int day;
+    int month;
+    int year;
     
+    // 年判定
     if(!getline(ss, sbuf, '/' )){
         std::cout << "入力が正しくありません" << std::endl;
         return false;
@@ -76,8 +80,11 @@ bool StudyRecord::checkDate(std::string date){
         }
         if((ibuf > 2026) || (ibuf < 2000)){
             check = false;
+        }else{
+            year = ibuf;
         }
     }
+    // 月判定
     if(!getline(ss, sbuf, '/' )){
         std::cout << "入力が正しくありません" << std::endl;
         return false;
@@ -96,8 +103,11 @@ bool StudyRecord::checkDate(std::string date){
         }
         if((ibuf < 1) || (ibuf > 12)){
             check = false;
+        }else{
+            month = ibuf;
         }
     }
+    // 日判定
     if(!getline(ss, sbuf, '/' )){
         std::cout << "入力が正しくありません" << std::endl;
         return false;
@@ -116,11 +126,35 @@ bool StudyRecord::checkDate(std::string date){
         }
         if((ibuf < 1) || (ibuf > 31)){
             check = false;
+        }else{
+            day = ibuf;
         }
     }
     if(!ss.eof()){
         std::cout << "入力が正しくありません" << std::endl;
         return false;
     }
+    check = judgeExistDay(year, month, day);
     return check;
+}
+bool StudyRecord::judgeExistDay(int year, int month, int day){
+    for(auto i=1; i<13; i++){
+        Month j;
+        j = static_cast<Month>(i);
+        if(j == Month::February){
+            if((year % 4 != 0) && (day == 29)){
+                return false;
+            }
+        }
+
+        if((j == Month::April) || 
+           (j == Month::June) ||
+           (j == Month::September) ||
+           (j == Month::November)){
+            if(day == 31){
+                return false;
+            }
+           }
+    }
+    return true;
 }
