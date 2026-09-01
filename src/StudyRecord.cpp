@@ -53,7 +53,7 @@ std::string StudyRecord::getContent() const{
     return content;
 }
 
-bool StudyRecord::checkDate(std::string date){
+bool StudyRecord::checkDate(const std::string& date){
     std::stringstream ss(date);
     int day;
     int month;
@@ -178,4 +178,7 @@ bool StudyRecord::judgeExistDay(int year, int month, int day){
             }
            }
     return true;
+}
+bool StudyRecord::checkMinute(int minute){
+    return minute > 0;
 }

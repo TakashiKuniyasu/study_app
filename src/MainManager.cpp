@@ -2,6 +2,7 @@
 #include <string>
 #include <limits>
 #include "MainManager.hpp"
+#include "StudyRecord.hpp"
 
 menu MainManager::userInput(){
     int num;
@@ -31,9 +32,25 @@ void MainManager::inputStudyRecord(std::string& content,
     std::cout << "学習内容を入力してください" << std::endl;
     std::cin >> content;
 
-    std::cout << "日付を入力してください" << std::endl;
-    std::cin >> date; 
+    while(true){
+        std::cout << "日付を入力してください" << std::endl;
+        std::cin >> date; 
+        if(StudyRecord::checkDate(date)){
+            break;
+        }
+        std::cout << "正しい日付を入力してください" << std::endl;    
+    }
 
-    std::cout << "学習時間を入力してください" << std::endl;
-    std::cin >> minute;
+   while(true){
+        std::cout << "学習時間を入力してください" << std::endl;
+        std::cin >> minute;
+
+        if(!std::cin.fail() && StudyRecord::checkMinute(minute)){
+            break;
+        }
+
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(),'\n');
+        std::cout << "正しい学習時間を入力してください" << std::endl;
+    }
 }
