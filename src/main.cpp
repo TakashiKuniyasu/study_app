@@ -1,6 +1,4 @@
 #include <iostream>
-#include <limits>
-#include "StudyRecord.hpp"
 #include "StudyManager.hpp"
 #include "MainManager.hpp"
 
@@ -11,8 +9,7 @@ int main(){
 
     while(true){
 
-        menu menu_num;
-        menu_num = user.userInput();
+        menu menu_num = user.userInput();
 
         switch (menu_num)
         {

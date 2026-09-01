@@ -11,5 +11,5 @@ enum class menu{
 
 class MainManager{
 public:
-menu userInput();  
+menu userInput();
 };

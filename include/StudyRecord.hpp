@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <sstream>
 
 enum class Month{
     January=1,
@@ -40,5 +41,9 @@ public:
     std::string getDate() const;
     std::string getContent() const;
     bool checkDate(std::string);
+    bool checkDateYear(std::stringstream&, int&);
+    bool checkDateMonth(std::stringstream&, int&);
+    bool checkDateDay(std::stringstream&, int&);
+    bool convertStringToInt(std::string, int&);
     bool judgeExistDay(int, int, int);
 };
