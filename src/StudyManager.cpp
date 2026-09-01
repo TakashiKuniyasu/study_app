@@ -121,10 +121,9 @@ void StudyManager::editPrevData(int id,
 
     for(StudyRecord& record: records){
         if(id == record.getID()){
-            StudyRecord data(id,content,date,minute);
-            records.push_back(data);
+            record.update(content, date, minute);
             std::cout << "次のように編集しました" << std::endl;
-            data.show();
+            record.show();
             saveToFile();
             break;
         }

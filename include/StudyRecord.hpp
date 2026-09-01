@@ -46,4 +46,5 @@ public:
     std::string getContent() const;
     static bool checkDate(const std::string&);
     static bool checkMinute(int minute);
+    void update(const std::string&, const std::string&, const int&);
 };

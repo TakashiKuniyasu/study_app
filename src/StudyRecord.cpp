@@ -157,3 +157,10 @@ bool StudyRecord::judgeExistDay(int year, int month, int day){
 bool StudyRecord::checkMinute(int minute){
     return minute > 0;
 }
+void StudyRecord::update(const std::string& content,
+                         const std::string& date,
+                         const int& minute){
+    this->content = content;
+    this->date = date;
+    this->minute = minute;
+}
