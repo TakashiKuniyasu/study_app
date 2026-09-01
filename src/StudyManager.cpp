@@ -125,7 +125,9 @@ void StudyManager::editPrevData(int id,
             std::cout << "次のように編集しました" << std::endl;
             record.show();
             saveToFile();
-            break;
+            return;
         }
     }
+    std::cout << "指定したIDが見つかりません" << std::endl;
+    return;
 }
