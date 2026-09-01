@@ -22,6 +22,7 @@ private:
     std::string date;
     std::string content;
     int minute;
+    bool convertStringToInt(std::string, int&);
 public:
     StudyRecord(
         int id,
@@ -44,6 +45,5 @@ public:
     bool checkDateYear(std::stringstream&, int&);
     bool checkDateMonth(std::stringstream&, int&);
     bool checkDateDay(std::stringstream&, int&);
-    bool convertStringToInt(std::string, int&);
     bool judgeExistDay(int, int, int);
 };

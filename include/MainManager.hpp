@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 
 enum class menu{
     Record =1,
