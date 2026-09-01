@@ -25,3 +25,15 @@ menu MainManager::userInput(){
     menu_num = static_cast<menu>(num);
     return menu_num;
 }
+void MainManager::inputStudyRecord(std::string& content,
+                      std::string& date,
+                      int& minute){
+    std::cout << "学習内容を入力してください" << std::endl;
+    std::cin >> content;
+
+    std::cout << "日付を入力してください" << std::endl;
+    std::cin >> date; 
+
+    std::cout << "学習時間を入力してください" << std::endl;
+    std::cin >> minute;
+}

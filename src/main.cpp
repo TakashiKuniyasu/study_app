@@ -15,7 +15,12 @@ int main(){
         {
         case menu::Record:
         {
-            manager.addRecord();
+            std::string content;
+            std::string date;
+            int minute;
+
+            user.inputStudyRecord(content, date, minute);
+            manager.addRecord(content, date, minute);
             break;
         }
         case menu::Watch:

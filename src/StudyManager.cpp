@@ -6,14 +6,19 @@
 #include "StudyRecord.hpp"
 #include "StudyManager.hpp"
 
-void StudyManager::addRecord(){
-    StudyRecord record{0,"","",0};
-
+void StudyManager::addRecord(std::string& content,
+                            std::string& date,
+                            int& minute){
     prevID++;
 
-    record.input(prevID);
-    records.push_back(record);
+    StudyRecord record(
+        prevID,
+        content,
+        date,
+        minute
+    );
 
+    records.push_back(record);
     saveToFile();
 }
 void StudyManager::showRecords() const{

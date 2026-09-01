@@ -6,7 +6,9 @@ class StudyManager{
 private:
     std::vector<StudyRecord> records;
 public:
-    void addRecord();
+    void addRecord(std::string&,
+                    std::string&,
+                    int&);
     void showRecords() const;
     void showTotalMinutes() const;
     void deleteRecord();

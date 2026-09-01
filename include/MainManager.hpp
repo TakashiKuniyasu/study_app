@@ -12,4 +12,7 @@ enum class menu{
 class MainManager{
 public:
 menu userInput();
+void inputStudyRecord(std::string&,
+                     std::string&,
+                     int&);
 };
