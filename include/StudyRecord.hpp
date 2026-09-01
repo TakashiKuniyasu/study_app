@@ -39,7 +39,6 @@ public:
          date(date),
          minute(minutes){}
 
-    void input(int id);
     void show() const;
     int getMinutes() const;
     int getID() const;

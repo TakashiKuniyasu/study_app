@@ -54,3 +54,25 @@ void MainManager::inputStudyRecord(std::string& content,
         std::cout << "正しい学習時間を入力してください" << std::endl;
     }
 }
+int MainManager::inputID(){
+    int id;
+    std::string sid;
+
+    while(true){
+        std::cout << "編集したいIDを指定してください" << std::endl;
+        std::cin >> sid;
+        try{
+            std::size_t pos;
+            id = std::stoi(sid, &pos);
+
+            if(pos != sid.size()){
+                std::cout << "IDが指定の形式ではありません" << std::endl;
+            }else{
+                break;
+            }
+        }catch(...){
+            std::cout << "IDが指定の形式ではありません" << std::endl;
+        }
+    }
+    return id;
+}

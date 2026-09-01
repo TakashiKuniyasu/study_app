@@ -14,7 +14,10 @@ public:
     void deleteRecord();
     void loadFromFile();
     void searchContent();
-    void editPrevData();
+    void editPrevData(int,
+                      std::string&,
+                      std::string&,
+                      int&);
 private:
     void saveToFile() const;
     int prevID=0;

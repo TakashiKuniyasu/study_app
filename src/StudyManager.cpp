@@ -114,37 +114,19 @@ void StudyManager::searchContent(){
         std::cout << "学習内容が見つかりませんでした" << std::endl;
     }
 }
-void StudyManager::editPrevData(){
-    bool found = false;
-    int id;
-    std::string sid;
-    std::cout << "編集したいIDを指定してください" << std::endl;
-    std::cin >> sid;
-
-    try{
-        std::size_t pos;
-        id = std::stoi(sid, &pos);
-
-        if(pos != sid.size()){
-            std::cout << "IDが指定の形式ではありません" << std::endl;
-            return;
-        }
-    }catch(...){
-        std::cout << "IDが指定の形式ではありません" << std::endl;
-        return;
-    }
+void StudyManager::editPrevData(int id,
+                                std::string& content,
+                                std::string& date,
+                                int& minute){
 
     for(StudyRecord& record: records){
         if(id == record.getID()){
-            record.input(id);
+            StudyRecord data(id,content,date,minute);
+            records.push_back(data);
             std::cout << "次のように編集しました" << std::endl;
-            record.show();
+            data.show();
             saveToFile();
-            found = true;
             break;
         }
-    }
-    if(!found){
-        std::cout << "指定したIDが見つかりません" << std::endl;
     }
 }

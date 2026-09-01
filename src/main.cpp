@@ -41,7 +41,15 @@ int main(){
         }
         case menu::Edit:
         {
-            manager.editPrevData();
+            int id = user.inputID();
+
+            std::string content;
+            std::string date;
+            int minute;
+
+            user.inputStudyRecord(content, date, minute);
+
+            manager.editPrevData(id, content, date, minute);
             break;
         }
         case menu::Exit:
