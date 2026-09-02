@@ -76,7 +76,7 @@ int MainManager::inputID(const std::string& message){
     }
     return id;
 }
-std::string MainManager::inputEditContent(){
+std::string MainManager::inputSearchContent(){
     std::string word;
     std::cout << "検索する学習内容を入力してください" << std::endl;
     std::cin >> word;

@@ -5,7 +5,6 @@
 #include <sstream>
 #include "StudyRecord.hpp"
 #include "StudyManager.hpp"
-#include "MainManager.hpp"
 
 void StudyManager::addRecord(std::string& content,
                             std::string& date,

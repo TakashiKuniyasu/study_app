@@ -37,7 +37,7 @@ int main(){
         }
         case menu::Search:
         {
-            std::string word = user.inputEditContent();
+            std::string word = user.inputSearchContent();
             manager.searchContent(word);
             break;
         }

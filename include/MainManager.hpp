@@ -17,5 +17,5 @@ void inputStudyRecord(std::string&,
                      std::string&,
                      int&);
 int inputID(const std::string&);
-std::string inputEditContent();
+std::string inputSearchContent();
 };
