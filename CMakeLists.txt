@@ -27,3 +27,16 @@ add_test(
     NAME StudyRecordTest
     COMMAND study_app_test
 )
+
+add_executable(study_manager_test
+    tests/StudyManagerTest.cpp
+    src/StudyManager.cpp
+    src/StudyRecord.cpp
+)
+
+target_include_directories(study_manager_test PRIVATE include)
+
+add_test(
+    NAME StudyManagerTest
+    COMMAND study_manager_test
+)

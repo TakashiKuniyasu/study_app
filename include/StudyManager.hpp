@@ -22,6 +22,7 @@ public:
                       const std::string&,
                       const std::string&,
                       int);
+    std::size_t getRecordCount() const;
 private:
     void saveToFile() const;
 };

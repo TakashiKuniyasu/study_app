@@ -127,3 +127,6 @@ void StudyManager::editPrevData(int id,
     std::cout << "指定したIDが見つかりません" << std::endl;
     return;
 }
+std::size_t StudyManager::getRecordCount() const{
+    return records.size();
+}
