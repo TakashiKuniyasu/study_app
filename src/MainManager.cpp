@@ -76,3 +76,24 @@ int MainManager::inputID(){
     }
     return id;
 }
+int MainManager::inputDeleteNum(){
+    std::string snum;
+    int inum;
+    while(true){
+        std::cout << "削除する内容を入力してください" << std::endl;
+        std::cin >> snum;
+        try{
+            inum = std::stoi(snum);
+        }catch(...){
+            std::cout << "入力された内容がIDではありません" << std::endl;
+        }
+    }
+    return inum;
+}
+std::string MainManager::inputEditContent(){
+    std::string word;
+    std::cout << "検索する学習内容を入力してください" << std::endl;
+    std::cin >> word;
+
+    return word;
+}

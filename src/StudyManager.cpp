@@ -5,6 +5,7 @@
 #include <sstream>
 #include "StudyRecord.hpp"
 #include "StudyManager.hpp"
+#include "MainManager.hpp"
 
 void StudyManager::addRecord(std::string& content,
                             std::string& date,
@@ -29,8 +30,7 @@ void StudyManager::showRecords() const{
 void StudyManager::deleteRecord(){
     int num;
 
-    std::cout << "削除する内容を入力してください" << std::endl;
-    std::cin >> num;
+    num = MainManager::inputDeleteNum();
 
     for(auto it = records.begin(); it != records.end(); ++it){
         if(it->getID() == num){
@@ -102,8 +102,7 @@ void StudyManager::loadFromFile(){
 void StudyManager::searchContent(){
     std::string word;
     bool found = false;
-    std::cout << "検索する学習内容を入力してください" << std::endl;
-    std::cin >> word;
+    word = MainManager::inputEditContent();
     for(const StudyRecord& record: records){
         if(record.getContent().find(word) != std::string::npos){
             record.show();

@@ -17,4 +17,6 @@ void inputStudyRecord(std::string&,
                      std::string&,
                      int&);
 int inputID();
+static int inputDeleteNum();
+static std::string inputEditContent();
 };
