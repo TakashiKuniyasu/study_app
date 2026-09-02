@@ -23,6 +23,7 @@ public:
                       const std::string&,
                       int);
     std::size_t getRecordCount() const;
+    const StudyRecord* findRecordByID(int id) const;
 private:
     void saveToFile() const;
 };

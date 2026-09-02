@@ -130,3 +130,10 @@ void StudyManager::editPrevData(int id,
 std::size_t StudyManager::getRecordCount() const{
     return records.size();
 }
+const StudyRecord* StudyManager::findRecordByID(int id) const{
+    for(const StudyRecord& record : records){
+        if(record.getID() == id){
+            return &record;
+        }
+    }
+}

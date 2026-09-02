@@ -20,4 +20,7 @@ int main(){
 
     test_manager.deleteRecord(2);
     assert(test_manager.getRecordCount() == 1);
+
+    assert(test_manager.findRecordByID(1) != nullptr);
+    assert(test_manager.findRecordByID(2) == nullptr);
 }
