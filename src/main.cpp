@@ -31,7 +31,7 @@ int main(){
         }
         case menu::Delete:
         {
-            int  id = user.inputID();
+            int  id = user.inputID("削除したいIDを入力してください");
             manager.deleteRecord(id);
             break;
         }
@@ -42,7 +42,7 @@ int main(){
         }
         case menu::Edit:
         {
-            int id = user.inputID();
+            int id = user.inputID("編集したいIDを入力してください");
 
             std::string content;
             std::string date;
