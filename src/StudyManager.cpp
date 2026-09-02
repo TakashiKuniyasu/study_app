@@ -19,7 +19,7 @@ void StudyManager::addRecord(std::string& content,
     );
 
     records.push_back(record);
-    saveToFile();
+    saveToFile("study_records.csv");
 }
 void StudyManager::showRecords() const{
    for(const StudyRecord& record : records){
@@ -31,7 +31,7 @@ void StudyManager::deleteRecord(int num){
     for(auto it = records.begin(); it != records.end(); ++it){
         if(it->getID() == num){
             records.erase(it);
-            saveToFile();
+            saveToFile("study_records.csv");
             return;
         }
     }
@@ -47,8 +47,8 @@ void StudyManager::showTotalMinutes() const{
     }
     std::cout << "総学習時間" << total << "分\n";   
 }
-void StudyManager::saveToFile() const{
-    std::ofstream file("study_records.csv");
+void StudyManager::saveToFile(const std::string& name) const{
+    std::ofstream file(name);
 
     for(const auto& record : records){
         file << record.getID() << ",";
@@ -57,9 +57,9 @@ void StudyManager::saveToFile() const{
         file << record.getMinutes() << "\n";
     }
 }
-void StudyManager::loadFromFile(){
+void StudyManager::loadFromFile(const std::string& name){
 
-    std::ifstream file("study_records.csv");
+    std::ifstream file(name);
     if(!file){
         std::cout << "ファイルオープンエラー" << std::endl;
         return;
@@ -117,7 +117,7 @@ void StudyManager::editPrevData(int id,
             record.update(content, date, minute);
             std::cout << "次のように編集しました" << std::endl;
             record.show();
-            saveToFile();
+            saveToFile("study_records.csv");
             return;
         }
     }
