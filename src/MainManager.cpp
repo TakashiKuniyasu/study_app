@@ -54,7 +54,7 @@ void MainManager::inputStudyRecord(std::string& content,
         std::cout << "正しい学習時間を入力してください" << std::endl;
     }
 }
-int MainManager::inputID(std::string  message){
+int MainManager::inputID(const std::string& message){
     int id;
     std::string sid;
 

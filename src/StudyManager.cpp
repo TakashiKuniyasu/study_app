@@ -96,10 +96,8 @@ void StudyManager::loadFromFile(){
         records.push_back(data);
     }
 }
-void StudyManager::searchContent(){
-    std::string word;
+void StudyManager::searchContent(const std::string& word){
     bool found = false;
-    word = MainManager::inputEditContent();
     for(const StudyRecord& record: records){
         if(record.getContent().find(word) != std::string::npos){
             record.show();

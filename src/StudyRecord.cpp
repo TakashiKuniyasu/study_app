@@ -110,7 +110,7 @@ bool StudyRecord::checkDateDay(std::stringstream& ss, int& day){
     }
     return true;
 }
-bool StudyRecord::convertStringToInt(const std::string sbuf, int &ibuf){
+bool StudyRecord::convertStringToInt(const std::string& sbuf, int &ibuf){
     try{
         std::size_t pos;
         ibuf = stoi(sbuf, &pos);
@@ -159,7 +159,7 @@ bool StudyRecord::checkMinute(int minute){
 }
 void StudyRecord::update(const std::string& content,
                          const std::string& date,
-                         int& minute){
+                         int minute){
     this->content = content;
     this->date = date;
     this->minute = minute;

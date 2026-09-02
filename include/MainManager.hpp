@@ -16,6 +16,6 @@ menu userInput();
 void inputStudyRecord(std::string&,
                      std::string&,
                      int&);
-int inputID(const std::string message);
-static std::string inputEditContent();
+int inputID(const std::string&);
+std::string inputEditContent();
 };

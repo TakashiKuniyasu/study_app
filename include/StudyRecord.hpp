@@ -26,7 +26,7 @@ private:
     static bool checkDateMonth(std::stringstream&, int&);
     static bool checkDateDay(std::stringstream&, int&);
     static bool judgeExistDay(int, int, int);
-    static bool convertStringToInt(const std::string, int&);
+    static bool convertStringToInt(const std::string&, int&);
 public:
     StudyRecord(
         int id,
@@ -46,5 +46,5 @@ public:
     std::string getContent() const;
     static bool checkDate(const std::string&);
     static bool checkMinute(int minute);
-    void update(const std::string&, const std::string&, int&);
+    void update(const std::string&, const std::string&, int);
 };

@@ -13,7 +13,7 @@ public:
     void showTotalMinutes() const;
     void deleteRecord(int);
     void loadFromFile();
-    void searchContent();
+    void searchContent(const std::string&);
     void editPrevData(int,
                       std::string&,
                       std::string&,
