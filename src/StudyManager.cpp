@@ -67,6 +67,8 @@ void StudyManager::loadFromFile(){
         std::cout << "ファイルオープンエラー" << std::endl;
         return;
     }
+    records.clear();
+    prevID = 0;
     int idNum;
     int minutesNum;
     std::string tmp;

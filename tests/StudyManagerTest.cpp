@@ -75,6 +75,7 @@ int main(){
     assert(editTestRecord->getMinutes() == 90);
 
     loadManager.loadFromFile();
+    assert(loadManager.getRecordCount() == 1);
     editTestRecord =
         loadManager.findRecordByID(1);
     assert(editTestRecord != nullptr);
