@@ -20,3 +20,10 @@ add_executable(study_app_test
 )
 
 target_include_directories(study_app_test PRIVATE include)
+
+enable_testing()
+
+add_test(
+    NAME StudyRecordTest
+    COMMAND study_app_test
+)
