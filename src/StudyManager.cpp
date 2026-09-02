@@ -136,4 +136,5 @@ const StudyRecord* StudyManager::findRecordByID(int id) const{
             return &record;
         }
     }
+    return nullptr;
 }
