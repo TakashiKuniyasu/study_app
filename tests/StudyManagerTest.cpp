@@ -38,4 +38,20 @@ int main(){
     assert(record->getContent() == "CMake");
     assert(record->getDate() == "2026/8/31");
     assert(record->getMinutes() == 75);
+
+    test_manager.deleteRecord(1);
+    StudyManager saveManager("test_record.csv");
+    saveManager.addRecord("C++","2026/8/30",90);
+
+    StudyManager loadManager("test_record.csv");
+    loadManager.loadFromFile();
+    assert(loadManager.getRecordCount() == 1);
+
+    const StudyRecord* record =
+        loadManager.findRecordByID(1);
+    
+    assert(record->getID() == 1);
+    assert(record->getContent() == "C++");
+    assert(record->getDate() ==  "2026/8/30");
+    assert(record->getMinutes() == 90);
 }
