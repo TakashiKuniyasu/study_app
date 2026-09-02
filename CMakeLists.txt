@@ -13,3 +13,10 @@ add_executable(study_app
 )
 
 target_include_directories(study_app PRIVATE include)
+
+add_executable(study_app_test
+    tests/StudyRecordTest.cpp
+    src/StudyRecord.cpp
+)
+
+target_include_directories(study_app_test PRIVATE include)
