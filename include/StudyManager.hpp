@@ -10,18 +10,18 @@ private:
     int prevID=0;
 public:
     StudyManager(const std::string& fileName);
-    void addRecord(std::string&,
-                    std::string&,
-                    int&);
+    void addRecord(const std::string&,
+                    const std::string&,
+                    int);
     void showRecords() const;
     void showTotalMinutes() const;
     void deleteRecord(int);
     void loadFromFile();
     void searchContent(const std::string&);
     void editPrevData(int,
-                      std::string&,
-                      std::string&,
-                      int&);
+                      const std::string&,
+                      const std::string&,
+                      int);
 private:
     void saveToFile() const;
 };
