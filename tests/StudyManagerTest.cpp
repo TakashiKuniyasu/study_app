@@ -47,11 +47,12 @@ int main(){
     loadManager.loadFromFile();
     assert(loadManager.getRecordCount() == 1);
 
-    const StudyRecord* record =
+    const StudyRecord* loadrecord =
         loadManager.findRecordByID(1);
     
-    assert(record->getID() == 1);
-    assert(record->getContent() == "C++");
-    assert(record->getDate() ==  "2026/8/30");
-    assert(record->getMinutes() == 90);
+    assert(loadrecord != nullptr);
+    assert(loadrecord->getID() == 1);
+    assert(loadrecord->getContent() == "C++");
+    assert(loadrecord->getDate() ==  "2026/8/30");
+    assert(loadrecord->getMinutes() == 90);
 }
