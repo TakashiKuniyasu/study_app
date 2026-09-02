@@ -23,4 +23,19 @@ int main(){
 
     assert(test_manager.findRecordByID(1) != nullptr);
     assert(test_manager.findRecordByID(2) == nullptr);
+
+    test_manager.editPrevData(
+        1,
+        "CMake",
+        "2026/8/31",
+        75
+    );
+    const StudyRecord* record =
+        test_manager.findRecordByID(1);
+    
+    assert(record != nullptr);
+    assert(record->getID() == 1);
+    assert(record->getContent() == "CMake");
+    assert(record->getDate() == "2026/8/31");
+    assert(record->getMinutes() == 75);
 }
