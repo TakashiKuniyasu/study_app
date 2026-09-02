@@ -6,9 +6,12 @@
 #include "StudyRecord.hpp"
 #include "StudyManager.hpp"
 
-void StudyManager::addRecord(std::string& content,
-                            std::string& date,
-                            int& minute){
+StudyManager::StudyManager(const std::string& fileName)
+    : fileName(fileName)
+{}
+void StudyManager::addRecord(const std::string& content,
+                            const std::string& date,
+                            int minute){
     prevID++;
 
     StudyRecord record(
@@ -19,7 +22,7 @@ void StudyManager::addRecord(std::string& content,
     );
 
     records.push_back(record);
-    saveToFile("study_records.csv");
+    saveToFile();
 }
 void StudyManager::showRecords() const{
    for(const StudyRecord& record : records){
@@ -31,7 +34,7 @@ void StudyManager::deleteRecord(int num){
     for(auto it = records.begin(); it != records.end(); ++it){
         if(it->getID() == num){
             records.erase(it);
-            saveToFile("study_records.csv");
+            saveToFile();
             return;
         }
     }
@@ -47,8 +50,8 @@ void StudyManager::showTotalMinutes() const{
     }
     std::cout << "総学習時間" << total << "分\n";   
 }
-void StudyManager::saveToFile(const std::string& name) const{
-    std::ofstream file(name);
+void StudyManager::saveToFile() const{
+    std::ofstream file(fileName);
 
     for(const auto& record : records){
         file << record.getID() << ",";
@@ -57,9 +60,9 @@ void StudyManager::saveToFile(const std::string& name) const{
         file << record.getMinutes() << "\n";
     }
 }
-void StudyManager::loadFromFile(const std::string& name){
+void StudyManager::loadFromFile(){
 
-    std::ifstream file(name);
+    std::ifstream file(fileName);
     if(!file){
         std::cout << "ファイルオープンエラー" << std::endl;
         return;
@@ -108,16 +111,16 @@ void StudyManager::searchContent(const std::string& word){
     }
 }
 void StudyManager::editPrevData(int id,
-                                std::string& content,
-                                std::string& date,
-                                int& minute){
+                                const std::string& content,
+                                const std::string& date,
+                                int minute){
 
     for(StudyRecord& record: records){
         if(id == record.getID()){
             record.update(content, date, minute);
             std::cout << "次のように編集しました" << std::endl;
             record.show();
-            saveToFile("study_records.csv");
+            saveToFile();
             return;
         }
     }

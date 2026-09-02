@@ -4,8 +4,8 @@
 
 int main(){
     MainManager user;
-    StudyManager manager;
-    manager.loadFromFile("study_records.csv");
+    StudyManager manager("study_records.csv");
+    manager.loadFromFile();
 
     while(true){
 
