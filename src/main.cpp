@@ -31,7 +31,8 @@ int main(){
         }
         case menu::Delete:
         {
-            manager.deleteRecord();
+            int  id = user.inputID();
+            manager.deleteRecord(id);
             break;
         }
         case menu::Search:

@@ -27,10 +27,7 @@ void StudyManager::showRecords() const{
         record.show();
     }
 }
-void StudyManager::deleteRecord(){
-    int num;
-
-    num = MainManager::inputDeleteNum();
+void StudyManager::deleteRecord(int num){
 
     for(auto it = records.begin(); it != records.end(); ++it){
         if(it->getID() == num){

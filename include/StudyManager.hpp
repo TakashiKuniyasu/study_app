@@ -11,7 +11,7 @@ public:
                     int&);
     void showRecords() const;
     void showTotalMinutes() const;
-    void deleteRecord();
+    void deleteRecord(int);
     void loadFromFile();
     void searchContent();
     void editPrevData(int,
