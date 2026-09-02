@@ -55,4 +55,31 @@ int main(){
     assert(loadrecord->getContent() == "C++");
     assert(loadrecord->getDate() ==  "2026/8/30");
     assert(loadrecord->getMinutes() == 90);
+
+    loadManager.deleteRecord(2);
+    assert(loadManager.getRecordCount() == 1);
+
+    loadManager.editPrevData(
+        2,
+        "C++基礎",
+        "2026/8/31",
+        60
+    );
+    const StudyRecord* editTestRecord =
+        loadManager.findRecordByID(1);
+    
+    assert(editTestRecord != nullptr);
+    assert(editTestRecord->getID() == 1);
+    assert(editTestRecord->getContent() == "C++");
+    assert(editTestRecord->getDate() == "2026/8/30");
+    assert(editTestRecord->getMinutes() == 90);
+
+    loadManager.loadFromFile();
+    editTestRecord =
+        loadManager.findRecordByID(1);
+    assert(editTestRecord != nullptr);
+    assert(editTestRecord->getID() == 1);
+    assert(editTestRecord->getContent() == "C++");
+    assert(editTestRecord->getDate() == "2026/8/30");
+    assert(editTestRecord->getMinutes() == 90);
 }
