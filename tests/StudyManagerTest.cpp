@@ -21,6 +21,7 @@ int main(){
     }
 }
 void addRecordTest(){
+    std::filesystem::remove("test_record.csv");
     StudyManager manager("test_record.csv");
     std::string content = "C++";
     std::string date = "2026/8/28";
@@ -52,6 +53,7 @@ void deleteRecordTest(){
     assert(manager.findRecordByID(2) == nullptr);
 }
 void editRecordTest(){
+    std::filesystem::remove("test_record.csv");
     StudyManager manager("test_record.csv");
     std::string content = "C++";
     std::string date = "2026/8/28";
@@ -74,6 +76,7 @@ void editRecordTest(){
     assert(record->getMinutes() == 75);
 }
 void saveAndLoadRecordTest(){
+    std::filesystem::remove("test_record.csv");
     StudyManager saveManager("test_record.csv");
     saveManager.addRecord("C++","2026/8/30",90);
 
@@ -89,29 +92,38 @@ void saveAndLoadRecordTest(){
     assert(loadrecord->getContent() == "C++");
     assert(loadrecord->getDate() ==  "2026/8/30");
     assert(loadrecord->getMinutes() == 90);
+}
+void deleteInvalidIdTest(){
+    std::filesystem::remove("test_record.csv");
+    StudyManager manager("test_record.csv");
+    manager.addRecord("C++", "2026/8/28", 60);
 
-    loadManager.deleteRecord(2);
-    assert(loadManager.getRecordCount() == 1);
+    manager.deleteRecord(2);
+    assert(manager.getRecordCount() == 1);
+}
+void editInvalidIdData(){
+    std::filesystem::remove("test_record.csv");
+    StudyManager manager("test_record.csv");
+    manager.addRecord("C++", "2026/8/28", 60); 
 
-    loadManager.editPrevData(
-        2,
-        "C++基礎",
-        "2026/8/31",
-        60
-    );
+    manager.editPrevData(2, "C++基礎", "2026/8/31", 90);
+
     const StudyRecord* editTestRecord =
-        loadManager.findRecordByID(1);
+        manager.findRecordByID(1);
     
     assert(editTestRecord != nullptr);
     assert(editTestRecord->getID() == 1);
     assert(editTestRecord->getContent() == "C++");
-    assert(editTestRecord->getDate() == "2026/8/30");
-    assert(editTestRecord->getMinutes() == 90);
-
-    loadManager.loadFromFile();
-    assert(loadManager.getRecordCount() == 1);
-    editTestRecord =
-        loadManager.findRecordByID(1);
+    assert(editTestRecord->getDate() == "2026/8/28");
+    assert(editTestRecord->getMinutes() == 60);
+    
+}
+void loadTwiceTest(){
+    StudyManager manager("test_record.csv");
+    manager.loadFromFile();
+    assert(manager.getRecordCount() == 1);
+    auto editTestRecord =
+        manager.findRecordByID(1);
     assert(editTestRecord != nullptr);
     assert(editTestRecord->getID() == 1);
     assert(editTestRecord->getContent() == "C++");
