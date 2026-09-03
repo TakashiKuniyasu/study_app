@@ -6,5 +6,5 @@ void deleteRecordTest();
 void editRecordTest();
 void saveAndLoadRecordTest();
 void deleteInvalidIdTest();
-void editInvalidIdData();
+void editInvalidIdTest();
 void loadTwiceTest();

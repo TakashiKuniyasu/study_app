@@ -10,8 +10,10 @@ int main(){
     addRecordTest();
     deleteRecordTest();
     editRecordTest();
-
     saveAndLoadRecordTest();
+    deleteInvalidIdTest();
+    editInvalidIdTest();
+    loadTwiceTest();
 
     std::error_code ec;
     if(std::filesystem::remove("test_record.csv",ec)){
@@ -101,7 +103,7 @@ void deleteInvalidIdTest(){
     manager.deleteRecord(2);
     assert(manager.getRecordCount() == 1);
 }
-void editInvalidIdData(){
+void editInvalidIdTest(){
     std::filesystem::remove("test_record.csv");
     StudyManager manager("test_record.csv");
     manager.addRecord("C++", "2026/8/28", 60); 
@@ -119,14 +121,20 @@ void editInvalidIdData(){
     
 }
 void loadTwiceTest(){
+    std::filesystem::remove("test_record.csv");
+    StudyManager saveManager("test_record.csv");
+    saveManager.addRecord("C++", "2026/8/28", 60); 
+
     StudyManager manager("test_record.csv");
     manager.loadFromFile();
+    assert(manager.getRecordCount() == 1);
+   manager.loadFromFile();
     assert(manager.getRecordCount() == 1);
     auto editTestRecord =
         manager.findRecordByID(1);
     assert(editTestRecord != nullptr);
     assert(editTestRecord->getID() == 1);
     assert(editTestRecord->getContent() == "C++");
-    assert(editTestRecord->getDate() == "2026/8/30");
-    assert(editTestRecord->getMinutes() == 90);
+    assert(editTestRecord->getDate() == "2026/8/28");
+    assert(editTestRecord->getMinutes() == 60);
 }
