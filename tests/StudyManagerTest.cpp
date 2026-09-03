@@ -25,7 +25,6 @@ TEST_F(StudyManagerTest, AddRecord){
     manager.addRecord("Docker", "2026/8/29", 80);
  
     EXPECT_EQ(manager.getRecordCount(), 2);
-    return;
 }
 TEST_F(StudyManagerTest, DeleteRecord){
     StudyManager manager("test_record.csv");

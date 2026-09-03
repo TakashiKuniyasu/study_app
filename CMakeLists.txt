@@ -30,10 +30,10 @@ add_executable(study_app_test
 target_include_directories(study_app_test PRIVATE include)
 
 enable_testing()
-
-add_test(
-    NAME StudyRecordTest
-    COMMAND study_app_test
+target_link_libraries(
+    study_app_test
+    PRIVATE
+    GTest::gtest_main
 )
 
 add_executable(study_manager_test
@@ -52,4 +52,5 @@ target_link_libraries(
 
 include(GoogleTest)
 
+gtest_discover_tests(study_app_test)
 gtest_discover_tests(study_manager_test)
