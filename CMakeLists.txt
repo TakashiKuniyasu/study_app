@@ -1,6 +1,14 @@
 cmake_minimum_required(VERSION 3.16)
 
 project(SampleProject)
+include(FetchContent)
+
+FetchContent_Declare(
+    googletest
+    URL https://github.com/google/googletest/archive/refs/tags/v1.17.0.zip
+)
+
+FetchContent_MakeAvailable(googletest)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -36,7 +44,12 @@ add_executable(study_manager_test
 
 target_include_directories(study_manager_test PRIVATE include)
 
-add_test(
-    NAME StudyManagerTest
-    COMMAND study_manager_test
+target_link_libraries(
+    study_manager_test
+    PRIVATE
+    GTest::gtest_main
 )
+
+include(GoogleTest)
+
+gtest_discover_tests(study_manager_test)

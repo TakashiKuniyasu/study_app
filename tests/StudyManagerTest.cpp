@@ -1,46 +1,24 @@
 #include <iostream>
-#include <cassert>
+#include <gtest/gtest.h>
 #include <filesystem>
 #include "StudyManager.hpp"
 #include "StudyManagerTest.hpp"
 
-int main(){
-    std::filesystem::remove("test_record.csv");
-
-    addRecordTest();
-    deleteRecordTest();
-    editRecordTest();
-    saveAndLoadRecordTest();
-    deleteInvalidIdTest();
-    editInvalidIdTest();
-    loadTwiceTest();
-
-    std::error_code ec;
-    if(std::filesystem::remove("test_record.csv",ec)){
-        std::cout << "ファイル削除しました" << std::endl;
-    }else{
-        std::cout << "削除に失敗しました" << ec.message() << std::endl;
-    }
-}
-void addRecordTest(){
+TEST(StudyManagerTest, AddRecord){
     std::filesystem::remove("test_record.csv");
     StudyManager manager("test_record.csv");
-    std::string content = "C++";
-    std::string date = "2026/8/28";
-    int minute = 60;
+    manager.addRecord("C++", "2026/8/28", 60);
 
-    manager.addRecord(content, date, minute);
-    assert(manager.getRecordCount() == 1);
+    EXPECT_EQ(manager.getRecordCount(), 1);
 
-    content = "Docker";
-    date = "2026/8/29";
-    minute = 80;
+    manager.addRecord("Docker", "2026/8/29", 80);
+ 
+    EXPECT_EQ(manager.getRecordCount(), 2);
 
-    manager.addRecord(content, date, minute);
-    assert(manager.getRecordCount() == 2);
+    std::filesystem::remove("test_record.csv");
     return;
 }
-void deleteRecordTest(){
+TEST(StudyManagerTest, Deleterecord){
     std::filesystem::remove("test_record.csv");
 
     StudyManager manager("test_record.csv");
@@ -49,61 +27,52 @@ void deleteRecordTest(){
     manager.addRecord("Docker", "2026/8/29", 80);
 
     manager.deleteRecord(2);
-
-    assert(manager.getRecordCount() == 1);
-    assert(manager.findRecordByID(1) != nullptr);
-    assert(manager.findRecordByID(2) == nullptr);
+    EXPECT_EQ(manager.getRecordCount(), 1);
+    EXPECT_NE(manager.findRecordByID(1), nullptr);
+    EXPECT_EQ(manager.findRecordByID(2), nullptr);
 }
-void editRecordTest(){
+TEST(StudyManagerTest, Editrecord){
     std::filesystem::remove("test_record.csv");
     StudyManager manager("test_record.csv");
-    std::string content = "C++";
-    std::string date = "2026/8/28";
-    int minute = 60;
 
-    manager.addRecord(content, date, minute);
-    manager.editPrevData(
-        1,
-        "CMake",
-        "2026/8/31",
-        75
-    );
+    manager.addRecord("C++", "2026/8/28", 60);
+    manager.editPrevData(1, "CMake", "2026/8/31", 75);
     const StudyRecord* record =
         manager.findRecordByID(1);
     
-    assert(record != nullptr);
-    assert(record->getID() == 1);
-    assert(record->getContent() == "CMake");
-    assert(record->getDate() == "2026/8/31");
-    assert(record->getMinutes() == 75);
+    ASSERT_NE(record, nullptr);
+    EXPECT_EQ(record->getID(), 1);
+    EXPECT_EQ(record->getContent(), "CMake");
+    EXPECT_EQ(record->getDate(), "2026/8/31");
+    EXPECT_EQ(record->getMinutes(), 75);
 }
-void saveAndLoadRecordTest(){
+TEST(StudyManagerTest, Saveandloadrecord){
     std::filesystem::remove("test_record.csv");
     StudyManager saveManager("test_record.csv");
     saveManager.addRecord("C++","2026/8/30",90);
 
     StudyManager loadManager("test_record.csv");
     loadManager.loadFromFile();
-    assert(loadManager.getRecordCount() == 1);
+    EXPECT_EQ(loadManager.getRecordCount(), 1);
 
     const StudyRecord* loadrecord =
         loadManager.findRecordByID(1);
     
-    assert(loadrecord != nullptr);
-    assert(loadrecord->getID() == 1);
-    assert(loadrecord->getContent() == "C++");
-    assert(loadrecord->getDate() ==  "2026/8/30");
-    assert(loadrecord->getMinutes() == 90);
+    ASSERT_NE(loadrecord, nullptr);
+    EXPECT_EQ(loadrecord->getID(), 1);
+    EXPECT_EQ(loadrecord->getContent(), "C++");
+    EXPECT_EQ(loadrecord->getDate(), "2026/8/30");
+    EXPECT_EQ(loadrecord->getMinutes(), 90);
 }
-void deleteInvalidIdTest(){
+TEST(StudyManagerTest, Deleteinvalidid){
     std::filesystem::remove("test_record.csv");
     StudyManager manager("test_record.csv");
     manager.addRecord("C++", "2026/8/28", 60);
 
     manager.deleteRecord(2);
-    assert(manager.getRecordCount() == 1);
+    EXPECT_EQ(manager.getRecordCount(), 1);
 }
-void editInvalidIdTest(){
+TEST(StudyManagerTest, Editinvalidid){
     std::filesystem::remove("test_record.csv");
     StudyManager manager("test_record.csv");
     manager.addRecord("C++", "2026/8/28", 60); 
@@ -113,28 +82,28 @@ void editInvalidIdTest(){
     const StudyRecord* editTestRecord =
         manager.findRecordByID(1);
     
-    assert(editTestRecord != nullptr);
-    assert(editTestRecord->getID() == 1);
-    assert(editTestRecord->getContent() == "C++");
-    assert(editTestRecord->getDate() == "2026/8/28");
-    assert(editTestRecord->getMinutes() == 60);
+    ASSERT_NE(editTestRecord, nullptr);
+    EXPECT_EQ(editTestRecord->getID(), 1);
+    EXPECT_EQ(editTestRecord->getContent(), "C++");
+    EXPECT_EQ(editTestRecord->getDate(), "2026/8/28");
+    EXPECT_EQ(editTestRecord->getMinutes(), 60);
     
 }
-void loadTwiceTest(){
+TEST(StudyManagerTest, Loadtwice){
     std::filesystem::remove("test_record.csv");
     StudyManager saveManager("test_record.csv");
     saveManager.addRecord("C++", "2026/8/28", 60); 
 
     StudyManager manager("test_record.csv");
     manager.loadFromFile();
-    assert(manager.getRecordCount() == 1);
+    EXPECT_EQ(manager.getRecordCount(), 1);
    manager.loadFromFile();
-    assert(manager.getRecordCount() == 1);
+    EXPECT_EQ(manager.getRecordCount(), 1);
     auto editTestRecord =
         manager.findRecordByID(1);
-    assert(editTestRecord != nullptr);
-    assert(editTestRecord->getID() == 1);
-    assert(editTestRecord->getContent() == "C++");
-    assert(editTestRecord->getDate() == "2026/8/28");
-    assert(editTestRecord->getMinutes() == 60);
+    ASSERT_NE(editTestRecord, nullptr);
+    EXPECT_EQ(editTestRecord->getID(), 1);
+    EXPECT_EQ(editTestRecord->getContent(), "C++");
+    EXPECT_EQ(editTestRecord->getDate(), "2026/8/28");
+    EXPECT_EQ(editTestRecord->getMinutes(), 60);
 }
