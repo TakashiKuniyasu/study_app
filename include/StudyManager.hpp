@@ -24,6 +24,7 @@ public:
                       int);
     std::size_t getRecordCount() const;
     const StudyRecord* findRecordByID(int id) const;
+    int getTotalMinutes() const;
 private:
     void saveToFile() const;
 };

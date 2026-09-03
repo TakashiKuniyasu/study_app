@@ -108,3 +108,11 @@ TEST_F(StudyManagerTest, LoadTwice){
     EXPECT_EQ(editTestRecord->getDate(), "2026/8/28");
     EXPECT_EQ(editTestRecord->getMinutes(), 60);
 }
+TEST_F(StudyManagerTest, TotalMinutes){
+    StudyManager manager("test_record.csv");
+    manager.addRecord("C++", "2026/8/28", 60); 
+    manager.addRecord("Docker", "2026/8/29", 90);
+
+    int total = manager.getTotalMinutes();
+    EXPECT_EQ(total, 150);
+}

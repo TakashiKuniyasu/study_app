@@ -40,15 +40,16 @@ void StudyManager::deleteRecord(int num){
     }
     std::cout << "削除できる内容がありません" << std::endl;
 }
-
-void StudyManager::showTotalMinutes() const{
-
+int StudyManager::getTotalMinutes() const{
     int total=0;
 
     for(const StudyRecord& record: records){
         total += record.getMinutes();
     }
-    std::cout << "総学習時間" << total << "分\n";   
+    return total;
+}
+void StudyManager::showTotalMinutes() const{
+    std::cout << "総学習時間" << getTotalMinutes() << "分\n";
 }
 void StudyManager::saveToFile() const{
     std::ofstream file(fileName);
