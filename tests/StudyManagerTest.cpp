@@ -7,12 +7,10 @@
 int main(){
     std::filesystem::remove("test_record.csv");
 
-    StudyManager test_manager("test_record.csv");
+    addRecordTest();
+    deleteRecordTest();
+    editRecordTest();
 
-    addRecordTest(test_manager);
-    deleteRecordTest(test_manager);
-    editRecordTest(test_manager);
-    test_manager.deleteRecord(1);
     saveAndLoadRecordTest();
 
     std::error_code ec;
@@ -22,38 +20,52 @@ int main(){
         std::cout << "削除に失敗しました" << ec.message() << std::endl;
     }
 }
-void addRecordTest(StudyManager& test_manager){
+void addRecordTest(){
+    StudyManager manager("test_record.csv");
     std::string content = "C++";
     std::string date = "2026/8/28";
     int minute = 60;
 
-    test_manager.addRecord(content, date, minute);
-    assert(test_manager.getRecordCount() == 1);
+    manager.addRecord(content, date, minute);
+    assert(manager.getRecordCount() == 1);
 
     content = "Docker";
     date = "2026/8/29";
     minute = 80;
 
-    test_manager.addRecord(content, date, minute);
-    assert(test_manager.getRecordCount() == 2);
+    manager.addRecord(content, date, minute);
+    assert(manager.getRecordCount() == 2);
     return;
 }
-void deleteRecordTest(StudyManager& test_manager){
-    test_manager.deleteRecord(2);
-    assert(test_manager.getRecordCount() == 1);
+void deleteRecordTest(){
+    std::filesystem::remove("test_record.csv");
 
-    assert(test_manager.findRecordByID(1) != nullptr);
-    assert(test_manager.findRecordByID(2) == nullptr);
+    StudyManager manager("test_record.csv");
+
+    manager.addRecord("C++", "2026/8/28", 60);
+    manager.addRecord("Docker", "2026/8/29", 80);
+
+    manager.deleteRecord(2);
+
+    assert(manager.getRecordCount() == 1);
+    assert(manager.findRecordByID(1) != nullptr);
+    assert(manager.findRecordByID(2) == nullptr);
 }
-void editRecordTest(StudyManager& test_manager){
-    test_manager.editPrevData(
+void editRecordTest(){
+    StudyManager manager("test_record.csv");
+    std::string content = "C++";
+    std::string date = "2026/8/28";
+    int minute = 60;
+
+    manager.addRecord(content, date, minute);
+    manager.editPrevData(
         1,
         "CMake",
         "2026/8/31",
         75
     );
     const StudyRecord* record =
-        test_manager.findRecordByID(1);
+        manager.findRecordByID(1);
     
     assert(record != nullptr);
     assert(record->getID() == 1);
