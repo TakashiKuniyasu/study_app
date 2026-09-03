@@ -16,7 +16,7 @@ protected:
         std::filesystem::remove("test_record.csv");
     }
 };
-TEST(StudyManagerTest, AddRecord){
+TEST_F(StudyManagerTest, AddRecord){
     StudyManager manager("test_record.csv");
     manager.addRecord("C++", "2026/8/28", 60);
 
@@ -27,7 +27,7 @@ TEST(StudyManagerTest, AddRecord){
     EXPECT_EQ(manager.getRecordCount(), 2);
     return;
 }
-TEST(StudyManagerTest, DeleteRecord){
+TEST_F(StudyManagerTest, DeleteRecord){
     StudyManager manager("test_record.csv");
 
     manager.addRecord("C++", "2026/8/28", 60);
@@ -38,7 +38,7 @@ TEST(StudyManagerTest, DeleteRecord){
     EXPECT_NE(manager.findRecordByID(1), nullptr);
     EXPECT_EQ(manager.findRecordByID(2), nullptr);
 }
-TEST(StudyManagerTest, EditRecord){
+TEST_F(StudyManagerTest, EditRecord){
     StudyManager manager("test_record.csv");
 
     manager.addRecord("C++", "2026/8/28", 60);
@@ -52,7 +52,7 @@ TEST(StudyManagerTest, EditRecord){
     EXPECT_EQ(record->getDate(), "2026/8/31");
     EXPECT_EQ(record->getMinutes(), 75);
 }
-TEST(StudyManagerTest, SaveAndLoadrecord){
+TEST_F(StudyManagerTest, SaveAndLoadRecord){
     StudyManager saveManager("test_record.csv");
     saveManager.addRecord("C++","2026/8/30",90);
 
@@ -69,14 +69,14 @@ TEST(StudyManagerTest, SaveAndLoadrecord){
     EXPECT_EQ(loadrecord->getDate(), "2026/8/30");
     EXPECT_EQ(loadrecord->getMinutes(), 90);
 }
-TEST(StudyManagerTest, DeleteInvalidId){
+TEST_F(StudyManagerTest, DeleteInvalidId){
     StudyManager manager("test_record.csv");
     manager.addRecord("C++", "2026/8/28", 60);
 
     manager.deleteRecord(2);
     EXPECT_EQ(manager.getRecordCount(), 1);
 }
-TEST(StudyManagerTest, EditInvalidId){
+TEST_F(StudyManagerTest, EditInvalidId){
     StudyManager manager("test_record.csv");
     manager.addRecord("C++", "2026/8/28", 60); 
 
@@ -92,7 +92,7 @@ TEST(StudyManagerTest, EditInvalidId){
     EXPECT_EQ(editTestRecord->getMinutes(), 60);
     
 }
-TEST(StudyManagerTest, LoadTwice){
+TEST_F(StudyManagerTest, LoadTwice){
     StudyManager saveManager("test_record.csv");
     saveManager.addRecord("C++", "2026/8/28", 60); 
 
