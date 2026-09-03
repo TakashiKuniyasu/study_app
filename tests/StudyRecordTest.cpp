@@ -39,7 +39,7 @@ TEST(StudyRecordTest, CheckGetter){
     EXPECT_EQ(record.getMinutes(), 60);
 }
 TEST(StudyRecordTest, CheckUpdate){
-    StudyRecord record(0,"","",0);
+    StudyRecord record(1,"","",0);
     record.update("Docker","2026/8/29",80);
 
     EXPECT_EQ(record.getID(), 1);
