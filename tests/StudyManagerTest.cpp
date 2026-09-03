@@ -2,10 +2,21 @@
 #include <gtest/gtest.h>
 #include <filesystem>
 #include "StudyManager.hpp"
-#include "StudyManagerTest.hpp"
 
+class StudyManagerTest : public ::testing::Test
+{
+protected:
+    void SetUp() override
+    {
+        std::filesystem::remove("test_record.csv");
+    }
+
+    void TearDown() override
+    {
+        std::filesystem::remove("test_record.csv");
+    }
+};
 TEST(StudyManagerTest, AddRecord){
-    std::filesystem::remove("test_record.csv");
     StudyManager manager("test_record.csv");
     manager.addRecord("C++", "2026/8/28", 60);
 
@@ -14,13 +25,9 @@ TEST(StudyManagerTest, AddRecord){
     manager.addRecord("Docker", "2026/8/29", 80);
  
     EXPECT_EQ(manager.getRecordCount(), 2);
-
-    std::filesystem::remove("test_record.csv");
     return;
 }
-TEST(StudyManagerTest, Deleterecord){
-    std::filesystem::remove("test_record.csv");
-
+TEST(StudyManagerTest, DeleteRecord){
     StudyManager manager("test_record.csv");
 
     manager.addRecord("C++", "2026/8/28", 60);
@@ -31,8 +38,7 @@ TEST(StudyManagerTest, Deleterecord){
     EXPECT_NE(manager.findRecordByID(1), nullptr);
     EXPECT_EQ(manager.findRecordByID(2), nullptr);
 }
-TEST(StudyManagerTest, Editrecord){
-    std::filesystem::remove("test_record.csv");
+TEST(StudyManagerTest, EditRecord){
     StudyManager manager("test_record.csv");
 
     manager.addRecord("C++", "2026/8/28", 60);
@@ -46,8 +52,7 @@ TEST(StudyManagerTest, Editrecord){
     EXPECT_EQ(record->getDate(), "2026/8/31");
     EXPECT_EQ(record->getMinutes(), 75);
 }
-TEST(StudyManagerTest, Saveandloadrecord){
-    std::filesystem::remove("test_record.csv");
+TEST(StudyManagerTest, SaveAndLoadrecord){
     StudyManager saveManager("test_record.csv");
     saveManager.addRecord("C++","2026/8/30",90);
 
@@ -64,16 +69,14 @@ TEST(StudyManagerTest, Saveandloadrecord){
     EXPECT_EQ(loadrecord->getDate(), "2026/8/30");
     EXPECT_EQ(loadrecord->getMinutes(), 90);
 }
-TEST(StudyManagerTest, Deleteinvalidid){
-    std::filesystem::remove("test_record.csv");
+TEST(StudyManagerTest, DeleteInvalidId){
     StudyManager manager("test_record.csv");
     manager.addRecord("C++", "2026/8/28", 60);
 
     manager.deleteRecord(2);
     EXPECT_EQ(manager.getRecordCount(), 1);
 }
-TEST(StudyManagerTest, Editinvalidid){
-    std::filesystem::remove("test_record.csv");
+TEST(StudyManagerTest, EditInvalidId){
     StudyManager manager("test_record.csv");
     manager.addRecord("C++", "2026/8/28", 60); 
 
@@ -89,8 +92,7 @@ TEST(StudyManagerTest, Editinvalidid){
     EXPECT_EQ(editTestRecord->getMinutes(), 60);
     
 }
-TEST(StudyManagerTest, Loadtwice){
-    std::filesystem::remove("test_record.csv");
+TEST(StudyManagerTest, LoadTwice){
     StudyManager saveManager("test_record.csv");
     saveManager.addRecord("C++", "2026/8/28", 60); 
 
