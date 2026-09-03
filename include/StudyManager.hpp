@@ -17,7 +17,6 @@ public:
     void showTotalMinutes() const;
     void deleteRecord(int);
     void loadFromFile();
-    void searchContent(const std::string&);
     void editPrevData(int,
                       const std::string&,
                       const std::string&,
@@ -25,6 +24,8 @@ public:
     std::size_t getRecordCount() const;
     const StudyRecord* findRecordByID(int id) const;
     int getTotalMinutes() const;
-private:
+    std::vector<StudyRecord> searchContent(const std::string&);
+    void showResultSearchContent(const std::vector<StudyRecord>&);
+    private:
     void saveToFile() const;
 };

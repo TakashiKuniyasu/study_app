@@ -116,3 +116,23 @@ TEST_F(StudyManagerTest, TotalMinutes){
     int total = manager.getTotalMinutes();
     EXPECT_EQ(total, 150);
 }
+TEST_F(StudyManagerTest, SearchContent){
+    StudyManager manager("test_record.csv");
+    manager.addRecord("C++基礎", "2026/8/28", 60);
+    manager.addRecord("Docker", "2026/8/29", 80);
+    manager.addRecord("C++応用", "2026/8/30", 90);
+
+    auto result = manager.searchContent("C++");
+    ASSERT_EQ(result.size(), 2);
+    EXPECT_EQ(result[0].getContent(), "C++基礎");   
+    EXPECT_EQ(result[1].getContent(), "C++応用");
+}
+TEST_F(StudyManagerTest, SearchContentNotFound){
+    StudyManager manager("test_record.csv");
+
+    manager.addRecord("C++基礎", "2026/8/28", 60);
+    manager.addRecord("Docker", "2026/8/29", 80);
+
+    auto result = manager.searchContent("Python");
+    EXPECT_TRUE(result.empty());
+}

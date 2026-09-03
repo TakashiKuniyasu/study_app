@@ -101,15 +101,21 @@ void StudyManager::loadFromFile(){
         records.push_back(data);
     }
 }
-void StudyManager::searchContent(const std::string& word){
-    bool found = false;
+std::vector<StudyRecord> StudyManager::searchContent(const std::string& word){
+    std::vector<StudyRecord> result;
     for(const StudyRecord& record: records){
         if(record.getContent().find(word) != std::string::npos){
-            record.show();
-            found = true;
+            result.push_back(record);
         }
     }
-    if(found == false){
+    return result;
+}
+void StudyManager::showResultSearchContent(const std::vector<StudyRecord>& records){
+    if(!records.empty()){
+        for(const StudyRecord& record: records){
+                record.show();
+            }
+    }else{
         std::cout << "学習内容が見つかりませんでした" << std::endl;
     }
 }

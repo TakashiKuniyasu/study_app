@@ -38,7 +38,8 @@ int main(){
         case menu::Search:
         {
             std::string word = user.inputSearchContent();
-            manager.searchContent(word);
+            auto records = manager.searchContent(word);
+            manager.showResultSearchContent(records);
             break;
         }
         case menu::Edit:
