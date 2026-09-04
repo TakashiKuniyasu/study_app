@@ -86,14 +86,33 @@ void StudyManager::loadFromFile(){
         std::getline(ss,date,',');
         std::getline(ss,minutes,',');
 
-        idNum = std::stoi(id);
+        try{
+            std::size_t pos;
+            idNum = std::stoi(id, &pos);
+
+            if(pos != id.size()){
+                std::cout << "CSVのIDが不正です" << std::endl;
+                return;
+            }
+        }catch(...){
+            std::cout << "CSVのIDが数値ではありません" << std::endl;
+            return;
+        }
         if(idNum > prevID){
             prevID = idNum;
         }
         try{
-            minutesNum = std::stoi(minutes);
+            std::size_t pos;
+            minutesNum = std::stoi(minutes, &pos);
+            if(pos != minutes.size()){
+                std::cout << "CSVの学習時間の値が数値ではありません" << std::endl;
+                return;
+            }
         }catch(...){
             std::cout << "CSVの学習時間が数値ではありません" << std::endl;
+            return;
+        }
+        if(!StudyRecord::checkMinute(minutesNum)){
             return;
         }
 

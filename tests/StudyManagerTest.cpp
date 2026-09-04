@@ -1,6 +1,7 @@
 #include <iostream>
 #include <gtest/gtest.h>
 #include <filesystem>
+#include <fstream>
 #include "StudyManager.hpp"
 
 class StudyManagerTest : public ::testing::Test
@@ -135,4 +136,20 @@ TEST_F(StudyManagerTest, SearchContentNotFound){
 
     auto result = manager.searchContent("Python");
     EXPECT_TRUE(result.empty());
+}
+TEST_F(StudyManagerTest, LoadInvalidId){
+    {
+        std::ofstream file("test_record.csv");
+        file << "abc,C++,2026/8/31,60\n";
+    }
+    StudyManager manager("test_record.csv");
+    EXPECT_NO_THROW(manager.loadFromFile());
+    EXPECT_EQ(manager.getRecordCount(), 0);
+
+    {
+        std::ofstream file("test_record.csv");
+        file << "1abc,C++,2026/8/31,60\n";
+    }
+    EXPECT_NO_THROW(manager.loadFromFile());
+    EXPECT_EQ(manager.getRecordCount(), 0);
 }
