@@ -98,9 +98,12 @@ void StudyManager::loadFromFile(){
             std::cout << "CSVのIDが数値ではありません" << std::endl;
             return;
         }
-        if(idNum > prevID){
-            prevID = idNum;
+
+        if(!StudyRecord::checkDate(date)){
+            std::cout << "CSVの日付の値が適切ではありません" << std::endl;
+            return;            
         }
+
         try{
             std::size_t pos;
             minutesNum = std::stoi(minutes, &pos);
@@ -108,14 +111,16 @@ void StudyManager::loadFromFile(){
                 std::cout << "CSVの学習時間の値が数値ではありません" << std::endl;
                 return;
             }
+            if(!StudyRecord::checkMinute(minutesNum)){
+                return;
+            }
         }catch(...){
-            std::cout << "CSVの学習時間が数値ではありません" << std::endl;
+            std::cout << "CSVの学習時間が正しい数値ではありません" << std::endl;
             return;
         }
-        if(!StudyRecord::checkMinute(minutesNum)){
-            return;
+        if(idNum > prevID){
+            prevID = idNum;
         }
-
         StudyRecord data(idNum,content,date,minutesNum);
         records.push_back(data);
     }

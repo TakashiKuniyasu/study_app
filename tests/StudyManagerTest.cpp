@@ -153,3 +153,50 @@ TEST_F(StudyManagerTest, LoadInvalidId){
     EXPECT_NO_THROW(manager.loadFromFile());
     EXPECT_EQ(manager.getRecordCount(), 0);
 }
+TEST_F(StudyManagerTest,InvalidMinutesTest){
+    {
+        std::ofstream file("test_record.csv");
+        file << "1,C++,2026/8/31,abc\n";
+    }
+    StudyManager manager("test_record.csv");
+    EXPECT_NO_THROW(manager.loadFromFile());
+    EXPECT_EQ(manager.getRecordCount(), 0);
+    {
+        std::ofstream file("test_record.csv");
+        file << "1,C++,2026/8/31,60abc\n";
+    }
+    EXPECT_NO_THROW(manager.loadFromFile());
+    EXPECT_EQ(manager.getRecordCount(), 0);
+    {
+        std::ofstream file("test_record.csv");
+        file << "1,C++,2026/8/31,-10\n";
+    }
+    EXPECT_NO_THROW(manager.loadFromFile());
+    EXPECT_EQ(manager.getRecordCount(), 0);
+}
+TEST_F(StudyManagerTest,InvalidRecordDoesNotAffectNextId){
+    {
+        std::ofstream file("test_record.csv");
+        file << "100,C++,2026/8/31,abc\n";
+    }
+    StudyManager manager("test_record.csv");
+    EXPECT_NO_THROW(manager.loadFromFile());
+
+    manager.addRecord("Docker", "2026/9/1", 60);
+    EXPECT_NE(manager.findRecordByID(1), nullptr);
+}
+TEST_F(StudyManagerTest, InvalidDateTest){
+    {
+        std::ofstream file("test_record.csv");
+        file << "1,C++,abc,60\n";
+    }
+    StudyManager manager("test_record.csv");
+    manager.loadFromFile();
+    EXPECT_EQ(manager.getRecordCount(), 0);
+    {
+        std::ofstream file("test_record.csv");
+        file << "1,C++,2026/2/30,60\n";
+    }
+    manager.loadFromFile();
+    EXPECT_EQ(manager.getRecordCount(), 0);
+}
