@@ -3,6 +3,7 @@
 #include <vector>
 #include <fstream>
 #include <sstream>
+#include <algorithm>
 #include "StudyRecord.hpp"
 #include "StudyManager.hpp"
 
@@ -85,23 +86,26 @@ void StudyManager::loadFromFile(){
         std::getline(ss,content,',');
         std::getline(ss,date,',');
         std::getline(ss,minutes,',');
-
+        if(std::count(tmp.begin(), tmp.end(), ',') != 3){
+                std::cout << "行の形式が不正です。" << std::endl;
+                continue;
+        }
         try{
             std::size_t pos;
             idNum = std::stoi(id, &pos);
 
             if(pos != id.size()){
                 std::cout << "CSVのIDが不正です" << std::endl;
-                return;
+                continue;
             }
         }catch(...){
             std::cout << "CSVのIDが数値ではありません" << std::endl;
-            return;
+            continue;
         }
 
         if(!StudyRecord::checkDate(date)){
             std::cout << "CSVの日付の値が適切ではありません" << std::endl;
-            return;            
+            continue;
         }
 
         try{
@@ -109,14 +113,14 @@ void StudyManager::loadFromFile(){
             minutesNum = std::stoi(minutes, &pos);
             if(pos != minutes.size()){
                 std::cout << "CSVの学習時間の値が数値ではありません" << std::endl;
-                return;
+                continue;
             }
             if(!StudyRecord::checkMinute(minutesNum)){
-                return;
+                continue;
             }
         }catch(...){
             std::cout << "CSVの学習時間が正しい数値ではありません" << std::endl;
-            return;
+            continue;
         }
         if(idNum > prevID){
             prevID = idNum;

@@ -200,3 +200,45 @@ TEST_F(StudyManagerTest, InvalidDateTest){
     manager.loadFromFile();
     EXPECT_EQ(manager.getRecordCount(), 0);
 }
+TEST_F(StudyManagerTest, LoadSkipsInvalidRecord){
+    {
+        std::ofstream file("test_record.csv");
+        file << "1,C++,2026/8/30,60\n";
+        file << "2,Docker,abc,90\n";
+        file << "3,CMake,2026/9/3,90\n";
+    }
+    StudyManager manager("test_record.csv");
+    manager.loadFromFile();
+
+    EXPECT_EQ(manager.getRecordCount(),2);
+    EXPECT_NE(manager.findRecordByID(1),nullptr);
+    EXPECT_EQ(manager.findRecordByID(2),nullptr);
+    EXPECT_NE(manager.findRecordByID(3),nullptr);
+}
+TEST_F(StudyManagerTest, LoadMissingColumn){
+    {
+        std::ofstream file("test_record.csv");
+        file << "1,C++,2026/8/30\n";
+    }
+    StudyManager manager("test_record.csv");
+    manager.loadFromFile();
+    EXPECT_EQ(manager.getRecordCount(),0);
+}
+TEST_F(StudyManagerTest, LoadExtraColumn){
+    {
+        std::ofstream file("test_record.csv");
+        file << "2,Docker,2026/8/31,90,abc";
+    }
+    StudyManager manager("test_record.csv");
+    manager.loadFromFile();
+    EXPECT_EQ(manager.getRecordCount(),0);
+}
+TEST_F(StudyManagerTest, LoadExtraEmptyColumn){
+    {
+        std::ofstream file("test_record.csv");
+        file << "2,Docker,2026/8/31,90,";
+    }
+    StudyManager manager("test_record.csv");
+    manager.loadFromFile();
+    EXPECT_EQ(manager.getRecordCount(),0);   
+}
