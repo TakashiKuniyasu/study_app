@@ -113,7 +113,7 @@ int MainManager::inputSortMinutesMethod(){
     return ascdesc;
 }
 void MainManager::showTotalMinutesByContents(const std::map<std::string,int>& sumtime){
-    for(auto i = sumtime.begin(); i != sumtime.end(); ++i){
-        std::cout << i->first << " " << i->second << "\n";
+    for(const auto data : sumtime){
+        std::cout << data.first << " " << data.second << "分\n";
     }
 }

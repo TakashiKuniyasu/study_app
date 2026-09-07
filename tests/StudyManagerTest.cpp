@@ -318,3 +318,15 @@ TEST_F(StudyManagerTest, SortMinutesAscTest){
     EXPECT_EQ(date,"2026/8/31");
     EXPECT_EQ(minutes,"120");
 }
+TEST_F(StudyManagerTest, TotalMinutesByContentsTest){
+    StudyManager manager("test_record.csv");
+    manager.addRecord("C++基礎", "2026/8/28", 80);
+    manager.addRecord("Docker", "2026/8/31", 120);
+    manager.addRecord("CMake", "2026/9/1", 60);
+    manager.addRecord("Docker","2026/9/4",35);
+    auto totaltime = manager.totalSumTimeContents();
+
+    EXPECT_EQ(totaltime["C++基礎"],80);
+    EXPECT_EQ(totaltime["Docker"],155);
+    EXPECT_EQ(totaltime["CMake"],60);
+}
