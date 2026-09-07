@@ -175,3 +175,25 @@ const StudyRecord* StudyManager::findRecordByID(int id) const{
     }
     return nullptr;
 }
+void StudyManager::sortMinutesDesc(){
+    std::sort(
+        records.begin(),
+        records.end(),
+        [](const StudyRecord& a, const StudyRecord& b){
+            return a.getMinutes() > b.getMinutes();
+        }
+    );
+    std::cout << "学習時間の降順で並べ替えました" << std::endl;
+    saveToFile();
+}
+void StudyManager::sortMinutesAsc(){
+    std::sort(
+        records.begin(),
+        records.end(),
+        [](const StudyRecord& a, const StudyRecord& b){
+            return a.getMinutes() < b.getMinutes();
+        }
+    );
+    std::cout << "学習時間の昇順で並べ替えました" << std::endl;
+    saveToFile();
+}

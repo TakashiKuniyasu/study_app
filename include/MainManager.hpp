@@ -7,6 +7,7 @@ enum class menu{
     Delete,
     Search,
     Edit,
+    Sort,
     Exit
 };
 
@@ -18,4 +19,5 @@ void inputStudyRecord(std::string&,
                      int&);
 int inputID(const std::string&);
 std::string inputSearchContent();
+int inputSortMinutesMethod();
 };

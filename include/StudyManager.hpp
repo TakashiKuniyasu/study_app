@@ -26,6 +26,8 @@ public:
     int getTotalMinutes() const;
     std::vector<StudyRecord> searchContent(const std::string&);
     void showResultSearchContent(const std::vector<StudyRecord>&);
+    void sortMinutesAsc();
+    void sortMinutesDesc();
     private:
     void saveToFile() const;
 };

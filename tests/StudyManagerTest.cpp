@@ -242,3 +242,79 @@ TEST_F(StudyManagerTest, LoadExtraEmptyColumn){
     manager.loadFromFile();
     EXPECT_EQ(manager.getRecordCount(),0);   
 }
+TEST_F(StudyManagerTest, SortMinutesDescTest){
+    StudyManager manager("test_record.csv");
+    manager.addRecord("C++基礎", "2026/8/28", 60);
+    manager.addRecord("Docker", "2026/8/31", 120);
+    manager.addRecord("CMake", "2026/9/1", 80);
+
+    manager.sortMinutesDesc();
+    std::string id;
+    std::string content;
+    std::string date;
+    std::string minutes;
+    std::ifstream file("test_record.csv");
+
+    std::getline(file,id,',');
+    std::getline(file,content,',');
+    std::getline(file,date,',');
+    std::getline(file,minutes,'\n'); 
+    EXPECT_EQ(id,"2");
+    EXPECT_EQ(content,"Docker");
+    EXPECT_EQ(date,"2026/8/31");
+    EXPECT_EQ(minutes,"120");
+    std::getline(file,id,',');
+    std::getline(file,content,',');
+    std::getline(file,date,',');
+    std::getline(file,minutes,'\n');
+    EXPECT_EQ(id,"3");
+    EXPECT_EQ(content,"CMake");
+    EXPECT_EQ(date,"2026/9/1");
+    EXPECT_EQ(minutes,"80");
+    std::getline(file,id,',');
+    std::getline(file,content,',');
+    std::getline(file,date,',');
+    std::getline(file,minutes,'\n');
+    EXPECT_EQ(id,"1");
+    EXPECT_EQ(content,"C++基礎");
+    EXPECT_EQ(date,"2026/8/28");
+    EXPECT_EQ(minutes,"60");
+}
+TEST_F(StudyManagerTest, SortMinutesAscTest){
+    StudyManager manager("test_record.csv");
+    manager.addRecord("C++基礎", "2026/8/28", 80);
+    manager.addRecord("Docker", "2026/8/31", 120);
+    manager.addRecord("CMake", "2026/9/1", 60);
+
+    manager.sortMinutesAsc();
+    std::string id;
+    std::string content;
+    std::string date;
+    std::string minutes;
+    std::ifstream file("test_record.csv");
+
+    std::getline(file,id,',');
+    std::getline(file,content,',');
+    std::getline(file,date,',');
+    std::getline(file,minutes,'\n'); 
+    EXPECT_EQ(id,"3");
+    EXPECT_EQ(content,"CMake");
+    EXPECT_EQ(date,"2026/9/1");
+    EXPECT_EQ(minutes,"60");
+    std::getline(file,id,',');
+    std::getline(file,content,',');
+    std::getline(file,date,',');
+    std::getline(file,minutes,'\n');
+    EXPECT_EQ(id,"1");
+    EXPECT_EQ(content,"C++基礎");
+    EXPECT_EQ(date,"2026/8/28");
+    EXPECT_EQ(minutes,"80");
+    std::getline(file,id,',');
+    std::getline(file,content,',');
+    std::getline(file,date,',');
+    std::getline(file,minutes,'\n');
+    EXPECT_EQ(id,"2");
+    EXPECT_EQ(content,"Docker");
+    EXPECT_EQ(date,"2026/8/31");
+    EXPECT_EQ(minutes,"120");
+}

@@ -14,13 +14,14 @@ menu MainManager::userInput(){
     std::cout << "３．学習記録を削除する" << std::endl;
     std::cout << "４．学習記録を検索する" << std::endl;
     std::cout << "５．学習記録を編集する" << std::endl;
-    std::cout << "６．終了" << std::endl;
+    std::cout << "６．学習記録を並び替える" << std::endl;
+    std::cout << "７．終了" << std::endl;
 
     std::cin >> num;
-    while((std::cin.fail())||(num < 1 || num > 6)){
+    while((std::cin.fail())||(num < 1 || num > 7)){
         std::cin.clear();
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(),'\n');
-        std::cout << "1〜6を入力してください" << std::endl;
+        std::cout << "1〜7を入力してください" << std::endl;
         std::cin >> num;
     }
     menu_num = static_cast<menu>(num);
@@ -82,4 +83,30 @@ std::string MainManager::inputSearchContent(){
     std::cin >> word;
 
     return word;
+}
+int MainManager::inputSortMinutesMethod(){
+    std::string strascdesc;
+    int ascdesc;
+    std::cout << "学習時間を昇順にするか降順にするか選択してください\n" << std::endl;
+    std::cout << "１：昇順、０：降順" << std::endl;
+    std::cin >> ascdesc;
+
+    while(true){
+        try{
+            std::size_t pos;
+            ascdesc = stoi(strascdesc, &pos);
+            if(pos != strascdesc.size()){
+                std::cout << "入力が適切ではありません" << std::endl;
+                continue;
+            }
+            if((ascdesc != 0)&&(ascdesc != 1)){
+                std::cout << "入力が適切ではありません" << std::endl;                
+                continue;
+            }
+        }catch(...){
+            std::cout << "入力が適切ではありません" << std::endl;
+            continue;
+        }
+    }
+    return ascdesc;
 }

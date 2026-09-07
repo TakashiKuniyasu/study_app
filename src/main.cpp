@@ -55,6 +55,16 @@ int main(){
             manager.editPrevData(id, content, date, minute);
             break;
         }
+        case menu::Sort:
+        {
+            int ascdesc = user.inputSortMinutesMethod();
+            if(ascdesc == 0){
+                manager.sortMinutesDesc();
+            }else{
+                manager.sortMinutesAsc();
+            }
+            break;
+        }
         case menu::Exit:
         {
             std::cout << "処理を終了します\n" << std::endl;
