@@ -1,4 +1,5 @@
 #include <iostream>
+#include <map>
 #include "StudyManager.hpp"
 #include "MainManager.hpp"
 
@@ -63,6 +64,13 @@ int main(){
             }else{
                 manager.sortMinutesAsc();
             }
+            break;
+        }
+        case menu::Sumtime:
+        {
+            std::map<std::string,int>sumtime;
+            sumtime = manager.totalSumTimeContents();
+            user.showTotalMinutesByContents(sumtime);
             break;
         }
         case menu::Exit:

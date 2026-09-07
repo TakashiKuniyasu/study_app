@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <map>
 #include "StudyRecord.hpp"
 
 class StudyManager{
@@ -28,6 +29,7 @@ public:
     void showResultSearchContent(const std::vector<StudyRecord>&);
     void sortMinutesAsc();
     void sortMinutesDesc();
+    std::map<std::string,int> totalSumTimeContents() const;
     private:
     void saveToFile() const;
 };

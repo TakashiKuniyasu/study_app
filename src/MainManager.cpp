@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <limits>
+#include <map>
 #include "MainManager.hpp"
 #include "StudyRecord.hpp"
 
@@ -15,13 +16,14 @@ menu MainManager::userInput(){
     std::cout << "４．学習記録を検索する" << std::endl;
     std::cout << "５．学習記録を編集する" << std::endl;
     std::cout << "６．学習記録を並び替える" << std::endl;
-    std::cout << "７．終了" << std::endl;
+    std::cout << "７．学習内容毎の学習時間を出力する" << std::endl;
+    std::cout << "８．終了" << std::endl;
 
     std::cin >> num;
-    while((std::cin.fail())||(num < 1 || num > 7)){
+    while((std::cin.fail())||(num < 1 || num > 8)){
         std::cin.clear();
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(),'\n');
-        std::cout << "1〜7を入力してください" << std::endl;
+        std::cout << "1〜8を入力してください" << std::endl;
         std::cin >> num;
     }
     menu_num = static_cast<menu>(num);
@@ -109,4 +111,9 @@ int MainManager::inputSortMinutesMethod(){
         }
     }
     return ascdesc;
+}
+void MainManager::showTotalMinutesByContents(const std::map<std::string,int>& sumtime){
+    for(auto i = sumtime.begin(); i != sumtime.end(); ++i){
+        std::cout << i->first << " " << i->second << "\n";
+    }
 }

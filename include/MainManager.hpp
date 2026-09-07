@@ -8,6 +8,7 @@ enum class menu{
     Search,
     Edit,
     Sort,
+    Sumtime,
     Exit
 };
 
@@ -20,4 +21,5 @@ void inputStudyRecord(std::string&,
 int inputID(const std::string&);
 std::string inputSearchContent();
 int inputSortMinutesMethod();
+void showTotalMinutesByContents(const std::map<std::string,int>&);
 };

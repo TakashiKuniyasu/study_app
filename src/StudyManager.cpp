@@ -4,6 +4,7 @@
 #include <fstream>
 #include <sstream>
 #include <algorithm>
+#include <map>
 #include "StudyRecord.hpp"
 #include "StudyManager.hpp"
 
@@ -196,4 +197,12 @@ void StudyManager::sortMinutesAsc(){
     );
     std::cout << "学習時間の昇順で並べ替えました" << std::endl;
     saveToFile();
+}
+std::map<std::string,int> StudyManager::totalSumTimeContents() const{
+    std::map<std::string,int>sumtime;
+
+    for(const StudyRecord& record : records){
+        sumtime[record.getContent()]+=record.getMinutes();
+    }
+    return sumtime;
 }
