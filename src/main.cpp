@@ -66,11 +66,21 @@ int main(){
             }
             break;
         }
-        case menu::Sumtime:
+        case menu::SumtimeByContents:
         {
             std::map<std::string,int>sumtime;
             sumtime = manager.totalSumTimeContents();
             user.showTotalMinutesByContents(sumtime);
+            break;
+        }
+        case menu::SumtimeByDate:
+        {
+            std::string start;
+            std::string end;
+            int minutes;
+            user.inputSortByDateStartAndEnd(start, end);
+            minutes = manager.getTotalMinutesInPeriod(start, end);
+            user.outputSortByDateStartAndEnd(minutes);
             break;
         }
         case menu::Exit:

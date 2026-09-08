@@ -17,13 +17,14 @@ menu MainManager::userInput(){
     std::cout << "５．学習記録を編集する" << std::endl;
     std::cout << "６．学習記録を並び替える" << std::endl;
     std::cout << "７．学習内容毎の学習時間を出力する" << std::endl;
-    std::cout << "８．終了" << std::endl;
+    std::cout << "８．学習期間内での学習時間を出力する" << std::endl;
+    std::cout << "９．終了" << std::endl;
 
     std::cin >> num;
-    while((std::cin.fail())||(num < 1 || num > 8)){
+    while((std::cin.fail())||(num < 1 || num > 9)){
         std::cin.clear();
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(),'\n');
-        std::cout << "1〜8を入力してください" << std::endl;
+        std::cout << "1〜9を入力してください" << std::endl;
         std::cin >> num;
     }
     menu_num = static_cast<menu>(num);
@@ -116,4 +117,27 @@ void MainManager::showTotalMinutesByContents(const std::map<std::string,int>& su
     for(const auto data : sumtime){
         std::cout << data.first << " " << data.second << "分\n";
     }
+}
+void MainManager::inputSortByDateStartAndEnd(std::string& start, std::string& end){
+    while(true){
+        std::cout << "開始期間を入力してください" << std::endl;
+        std::cin >> start;
+        if(!StudyRecord::checkDate(start)){
+            std::cout << "開始時期の入力が正しくありません" << std::endl;
+            continue;
+        }
+        break;
+    }
+    while(true){
+        std::cout << "終了期間を入力してください" << std::endl;
+        std::cin >> end;
+        if(!StudyRecord::checkDate(end)){
+            std::cout << "終了時期の入力が正しくありません" << std::endl;
+            continue;
+        }
+        break;
+    }
+}
+void MainManager::outputSortByDateStartAndEnd(int minutes){
+    std::cout << "期間内の総学習時間" << " " << minutes << "分" << std::endl;
 }

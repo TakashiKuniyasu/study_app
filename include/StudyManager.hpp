@@ -30,6 +30,8 @@ public:
     void sortMinutesAsc();
     void sortMinutesDesc();
     std::map<std::string,int> totalSumTimeContents() const;
+    int getTotalMinutesInPeriod(const std::string&, const std::string&)const;
     private:
     void saveToFile() const;
+    static int dateToInt(const std::string&);
 };

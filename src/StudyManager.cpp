@@ -5,6 +5,7 @@
 #include <sstream>
 #include <algorithm>
 #include <map>
+#include <cctype>
 #include "StudyRecord.hpp"
 #include "StudyManager.hpp"
 
@@ -205,4 +206,37 @@ std::map<std::string,int> StudyManager::totalSumTimeContents() const{
         sumtime[record.getContent()]+=record.getMinutes();
     }
     return sumtime;
+}
+int StudyManager::getTotalMinutesInPeriod(const std::string& start, const std::string& end)const{
+    std::string starget;
+    int result=0;
+    int istart = dateToInt(start);
+    int iend = dateToInt(end);
+
+    for(const StudyRecord& record : records){
+        int itarget = dateToInt(record.getDate());
+        
+        if((istart <= itarget)&&(itarget <= iend)){
+            result += record.getMinutes();
+        }
+    }
+    return  result;
+}
+int StudyManager::dateToInt(const std::string& date){
+    std::stringstream ss(date);
+    int day;
+    int month;
+    int year;
+    int result;
+
+    std::string sbuf;
+    getline(ss, sbuf, '/' );
+    year = stoi(sbuf);
+    getline(ss, sbuf, '/' );
+    month = stoi(sbuf);
+    getline(ss, sbuf, '/' );
+    day = stoi(sbuf);
+
+    result = year * 10000 + month * 100 + day;
+    return result;
 }
