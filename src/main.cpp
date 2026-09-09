@@ -56,10 +56,20 @@ int main(){
             manager.editPrevData(id, content, date, minute);
             break;
         }
-        case menu::Sort:
+        case menu::SortByDate:
         {
-            int ascdesc = user.inputSortMinutesMethod();
-            if(ascdesc == 0){
+            auto ascdesc = user.inputSortMethod();
+            if(ascdesc == ascdesc::desc){
+                manager.sortDateDesc();
+            }else{
+                manager.sortDateAsc();
+            }
+            break;
+        }
+        case menu::SortByMinutes:
+        {
+            auto ascdesc = user.inputSortMethod();
+            if(ascdesc == ascdesc::desc){
                 manager.sortMinutesDesc();
             }else{
                 manager.sortMinutesAsc();
@@ -78,9 +88,19 @@ int main(){
             std::string start;
             std::string end;
             int minutes;
-            user.inputSortByDateStartAndEnd(start, end);
+            user.inputSumtimeByDateStartAndEnd(start, end);
             minutes = manager.getTotalMinutesInPeriod(start, end);
-            user.outputSortByDateStartAndEnd(minutes);
+            user.outputSumtimeByDateStartAndEnd(minutes);
+            break;
+        }
+        case menu::SumtimeByContentsInPeriod:
+        {
+            std::map<std::string,int> sumtime;
+            std::string start;
+            std::string end;
+            user.inputSumtimeByDateStartAndEnd(start, end);
+            sumtime = manager.SumtimeByContentsInPeriod(start, end);
+            user.outputSumtimeByContentsInPeriod(sumtime);
             break;
         }
         case menu::Exit:

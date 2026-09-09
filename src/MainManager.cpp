@@ -15,16 +15,18 @@ menu MainManager::userInput(){
     std::cout << "３．学習記録を削除する" << std::endl;
     std::cout << "４．学習記録を検索する" << std::endl;
     std::cout << "５．学習記録を編集する" << std::endl;
-    std::cout << "６．学習記録を並び替える" << std::endl;
-    std::cout << "７．学習内容毎の学習時間を出力する" << std::endl;
-    std::cout << "８．学習期間内での学習時間を出力する" << std::endl;
-    std::cout << "９．終了" << std::endl;
+    std::cout << "６．日付を並び替える" << std::endl;
+    std::cout << "７．学習記録を並び替える" << std::endl;
+    std::cout << "８．学習内容毎の学習時間を出力する" << std::endl;
+    std::cout << "９．学習期間内での学習時間を出力する" << std::endl;
+    std::cout << "１０．学習期間内での学習内容ごとの学習時間を出力する" << std::endl;
+    std::cout << "１１．終了" << std::endl;
 
     std::cin >> num;
-    while((std::cin.fail())||(num < 1 || num > 9)){
+    while((std::cin.fail())||(num < 1 || num > 11)){
         std::cin.clear();
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(),'\n');
-        std::cout << "1〜9を入力してください" << std::endl;
+        std::cout << "1〜11を入力してください" << std::endl;
         std::cin >> num;
     }
     menu_num = static_cast<menu>(num);
@@ -87,22 +89,22 @@ std::string MainManager::inputSearchContent(){
 
     return word;
 }
-int MainManager::inputSortMinutesMethod(){
-    std::string strascdesc;
-    int ascdesc;
-    std::cout << "学習時間を昇順にするか降順にするか選択してください\n" << std::endl;
-    std::cout << "１：昇順、０：降順" << std::endl;
-    std::cin >> ascdesc;
+enum ascdesc MainManager::inputSortMethod(){
+    std::string strvalue;
+    int value;
 
     while(true){
         try{
+            std::cout << "昇順にするか降順にするか選択してください" << std::endl;
+            std::cout << "１：昇順、０：降順" << std::endl;
+            std::cin >> strvalue;
             std::size_t pos;
-            ascdesc = stoi(strascdesc, &pos);
-            if(pos != strascdesc.size()){
+            value = stoi(strvalue, &pos);
+            if(pos != strvalue.size()){
                 std::cout << "入力が適切ではありません" << std::endl;
                 continue;
             }
-            if((ascdesc != 0)&&(ascdesc != 1)){
+            if((value != 0)&&(value != 1)){
                 std::cout << "入力が適切ではありません" << std::endl;                
                 continue;
             }
@@ -110,15 +112,16 @@ int MainManager::inputSortMinutesMethod(){
             std::cout << "入力が適切ではありません" << std::endl;
             continue;
         }
+        break;
     }
-    return ascdesc;
+    return static_cast<enum::ascdesc>(value);
 }
 void MainManager::showTotalMinutesByContents(const std::map<std::string,int>& sumtime){
     for(const auto data : sumtime){
         std::cout << data.first << " " << data.second << "分\n";
     }
 }
-void MainManager::inputSortByDateStartAndEnd(std::string& start, std::string& end){
+void MainManager::inputSumtimeByDateStartAndEnd(std::string& start, std::string& end){
     while(true){
         std::cout << "開始期間を入力してください" << std::endl;
         std::cin >> start;
@@ -138,6 +141,11 @@ void MainManager::inputSortByDateStartAndEnd(std::string& start, std::string& en
         break;
     }
 }
-void MainManager::outputSortByDateStartAndEnd(int minutes){
+void MainManager::outputSumtimeByDateStartAndEnd(int minutes){
     std::cout << "期間内の総学習時間" << " " << minutes << "分" << std::endl;
+}
+void MainManager::outputSumtimeByContentsInPeriod(const std::map<std::string,int>& sumtime){
+    for(const auto data : sumtime){
+        std::cout << data.first << " " << data.second << "分\n";
+    }   
 }

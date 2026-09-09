@@ -31,6 +31,9 @@ public:
     void sortMinutesDesc();
     std::map<std::string,int> totalSumTimeContents() const;
     int getTotalMinutesInPeriod(const std::string&, const std::string&)const;
+    void sortDateDesc();
+    void sortDateAsc();
+    std::map<std::string,int> SumtimeByContentsInPeriod(std::string&, std::string&);
     private:
     void saveToFile() const;
     static int dateToInt(const std::string&);

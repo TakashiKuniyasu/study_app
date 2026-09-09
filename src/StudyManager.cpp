@@ -240,3 +240,36 @@ int StudyManager::dateToInt(const std::string& date){
     result = year * 10000 + month * 100 + day;
     return result;
 }
+void StudyManager::sortDateDesc(){
+    std::sort(
+        records.begin(),
+        records.end(),
+        [](const StudyRecord& a, const StudyRecord& b){
+            return dateToInt(a.getDate()) > dateToInt(b.getDate());
+        }
+    );
+    std::cout << "日付の降順で並べ替えました" << std::endl;
+    saveToFile();
+}
+void StudyManager::sortDateAsc(){
+    std::sort(
+        records.begin(),
+        records.end(),
+        [](const StudyRecord& a, const StudyRecord& b){
+            return dateToInt(a.getDate()) < dateToInt(b.getDate());
+        }
+    );
+    std::cout << "日付の昇順で並べ替えました" << std::endl;
+    saveToFile();
+}
+std::map<std::string,int> StudyManager::SumtimeByContentsInPeriod(std::string& start, std::string& end){
+    std::map<std::string,int> timebycontents;
+    for(const StudyRecord& a : records){
+        if((dateToInt(a.getDate()) >= dateToInt(start)) &&
+            (dateToInt(a.getDate())) <= dateToInt(end))
+            {
+                timebycontents[a.getContent()] += a.getMinutes();
+            }
+    }
+    return timebycontents;
+}

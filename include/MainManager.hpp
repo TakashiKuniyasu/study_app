@@ -7,12 +7,17 @@ enum class menu{
     Delete,
     Search,
     Edit,
-    Sort,
+    SortByDate,
+    SortByMinutes,
     SumtimeByContents,
     SumtimeByDate,
+    SumtimeByContentsInPeriod,
     Exit
 };
-
+enum class ascdesc{
+    desc=0,
+    asc
+};
 class MainManager{
 public:
 menu userInput();
@@ -21,8 +26,10 @@ void inputStudyRecord(std::string&,
                      int&);
 int inputID(const std::string&);
 std::string inputSearchContent();
-int inputSortMinutesMethod();
+enum ascdesc inputSortMethod();
 void showTotalMinutesByContents(const std::map<std::string,int>&);
-void inputSortByDateStartAndEnd(std::string&, std::string&);
-void outputSortByDateStartAndEnd(int);
+void inputSumtimeByDateStartAndEnd(std::string&, std::string&);
+void outputSumtimeByDateStartAndEnd(int);
+void inputSortByDate();
+void outputSumtimeByContentsInPeriod(const std::map<std::string,int>&);
 };
