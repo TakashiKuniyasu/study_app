@@ -95,11 +95,10 @@ int main(){
         }
         case menu::SumtimeByContentsInPeriod:
         {
-            std::map<std::string,int> sumtime;
             std::string start;
             std::string end;
             user.inputSumtimeByDateStartAndEnd(start, end);
-            sumtime = manager.SumtimeByContentsInPeriod(start, end);
+            auto sumtime = manager.SumtimeByContentsInPeriod(start, end);
             user.outputSumtimeByContentsInPeriod(sumtime);
             break;
         }

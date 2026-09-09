@@ -262,11 +262,15 @@ void StudyManager::sortDateAsc(){
     std::cout << "日付の昇順で並べ替えました" << std::endl;
     saveToFile();
 }
-std::map<std::string,int> StudyManager::SumtimeByContentsInPeriod(std::string& start, std::string& end){
+std::map<std::string,int> StudyManager::SumtimeByContentsInPeriod(const std::string& start, const std::string& end) const{
     std::map<std::string,int> timebycontents;
+    const int startDate = dateToInt(start);
+    const int endDate = dateToInt(end);
+
     for(const StudyRecord& a : records){
-        if((dateToInt(a.getDate()) >= dateToInt(start)) &&
-            (dateToInt(a.getDate())) <= dateToInt(end))
+        const int targetdate = dateToInt(a.getDate());
+        if((targetdate >= startDate) &&
+            (targetdate <= endDate))
             {
                 timebycontents[a.getContent()] += a.getMinutes();
             }
