@@ -18,6 +18,7 @@ add_executable(study_app
     src/StudyRecord.cpp
     src/StudyManager.cpp
     src/MainManager.cpp
+    src/CsvManager.cpp
 )
 
 target_include_directories(study_app PRIVATE include)
@@ -40,6 +41,7 @@ add_executable(study_manager_test
     tests/StudyManagerTest.cpp
     src/StudyManager.cpp
     src/StudyRecord.cpp
+    src/CsvManager.cpp
 )
 
 target_include_directories(study_manager_test PRIVATE include)

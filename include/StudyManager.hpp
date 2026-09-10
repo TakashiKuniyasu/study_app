@@ -37,11 +37,4 @@ public:
 private:
     void saveToFile() const;
     static int dateToInt(const std::string&);
-    static bool csvIdCheck(const std::string&, int&);
-    static bool csvMinutesCheck(const std::string&, int&);
-    static bool parseCsvRecord(std::string& id,
-                               std::string& content,
-                               std::string& date,
-                               std::string& minutes,
-                               const std::string& line);
 };
