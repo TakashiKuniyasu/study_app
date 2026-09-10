@@ -448,7 +448,7 @@ TEST_F(StudyManagerTest, SumtimeByContentsInPeriodTest){
     manager.addRecord("C++","2026/9/4",35);
     
     auto sumtime = 
-        manager.SumtimeByContentsInPeriod("2026/8/28", "2026/9/3");
+        manager.sumtimeByContentsInPeriod("2026/8/28", "2026/9/3");
     
     EXPECT_EQ(sumtime["C++基礎"],80);
     EXPECT_EQ(sumtime["Docker"],180);
@@ -457,6 +457,6 @@ TEST_F(StudyManagerTest, SumtimeByContentsInPeriodTest){
     EXPECT_EQ(sumtime.size(),3);
 
     sumtime = 
-       manager.SumtimeByContentsInPeriod("2026/9/5", "2026/9/6");
+       manager.sumtimeByContentsInPeriod("2026/9/5", "2026/9/6");
     EXPECT_EQ(sumtime.size(),0);
 }

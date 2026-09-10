@@ -33,8 +33,15 @@ public:
     int getTotalMinutesInPeriod(const std::string&, const std::string&)const;
     void sortDateDesc();
     void sortDateAsc();
-    std::map<std::string,int> SumtimeByContentsInPeriod(const std::string&, const std::string&) const;
-    private:
+    std::map<std::string,int> sumtimeByContentsInPeriod(const std::string&, const std::string&) const;
+private:
     void saveToFile() const;
     static int dateToInt(const std::string&);
+    static bool csvIdCheck(const std::string&, int&);
+    static bool csvMinutesCheck(const std::string&, int&);
+    static bool parseCsvRecord(std::string& id,
+                               std::string& content,
+                               std::string& date,
+                               std::string& minutes,
+                               const std::string& line);
 };

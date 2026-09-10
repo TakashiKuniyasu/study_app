@@ -98,7 +98,7 @@ int main(){
             std::string start;
             std::string end;
             user.inputSumtimeByDateStartAndEnd(start, end);
-            auto sumtime = manager.SumtimeByContentsInPeriod(start, end);
+            auto sumtime = manager.sumtimeByContentsInPeriod(start, end);
             user.outputSumtimeByContentsInPeriod(sumtime);
             break;
         }
