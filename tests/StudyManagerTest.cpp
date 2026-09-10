@@ -16,6 +16,22 @@ protected:
     {
         std::filesystem::remove("test_record.csv");
     }
+void writeCsv(const std::string& str){
+    {
+        std::ofstream file("test_record.csv");
+        file << str;
+    }
+}
+void getLineFromFile(std::ifstream& file,
+                     std::string& id,
+                     std::string& content,
+                     std::string& date,
+                     std::string& minutes){
+    std::getline(file,id,',');
+    std::getline(file,content,',');
+    std::getline(file,date,',');
+    std::getline(file,minutes,'\n'); 
+}
 };
 TEST_F(StudyManagerTest, AddRecord){
     StudyManager manager("test_record.csv");
@@ -138,47 +154,32 @@ TEST_F(StudyManagerTest, SearchContentNotFound){
     EXPECT_TRUE(result.empty());
 }
 TEST_F(StudyManagerTest, LoadInvalidId){
-    {
-        std::ofstream file("test_record.csv");
-        file << "abc,C++,2026/8/31,60\n";
-    }
+    writeCsv("abc,C++,2026/8/31,60\n");
+
     StudyManager manager("test_record.csv");
     EXPECT_NO_THROW(manager.loadFromFile());
     EXPECT_EQ(manager.getRecordCount(), 0);
 
-    {
-        std::ofstream file("test_record.csv");
-        file << "1abc,C++,2026/8/31,60\n";
-    }
+    writeCsv("1abc,C++,2026/8/31,60\n");
     EXPECT_NO_THROW(manager.loadFromFile());
     EXPECT_EQ(manager.getRecordCount(), 0);
 }
 TEST_F(StudyManagerTest,InvalidMinutesTest){
-    {
-        std::ofstream file("test_record.csv");
-        file << "1,C++,2026/8/31,abc\n";
-    }
+    writeCsv("1,C++,2026/8/31,abc\n");
     StudyManager manager("test_record.csv");
     EXPECT_NO_THROW(manager.loadFromFile());
     EXPECT_EQ(manager.getRecordCount(), 0);
-    {
-        std::ofstream file("test_record.csv");
-        file << "1,C++,2026/8/31,60abc\n";
-    }
+
+    writeCsv("1,C++,2026/8/31,60abc\n");
     EXPECT_NO_THROW(manager.loadFromFile());
     EXPECT_EQ(manager.getRecordCount(), 0);
-    {
-        std::ofstream file("test_record.csv");
-        file << "1,C++,2026/8/31,-10\n";
-    }
+
+    writeCsv("1,C++,2026/8/31,-10\n");
     EXPECT_NO_THROW(manager.loadFromFile());
     EXPECT_EQ(manager.getRecordCount(), 0);
 }
 TEST_F(StudyManagerTest,InvalidRecordDoesNotAffectNextId){
-    {
-        std::ofstream file("test_record.csv");
-        file << "100,C++,2026/8/31,abc\n";
-    }
+    writeCsv("100,C++,2026/8/31,abc\n");
     StudyManager manager("test_record.csv");
     EXPECT_NO_THROW(manager.loadFromFile());
 
@@ -186,27 +187,19 @@ TEST_F(StudyManagerTest,InvalidRecordDoesNotAffectNextId){
     EXPECT_NE(manager.findRecordByID(1), nullptr);
 }
 TEST_F(StudyManagerTest, InvalidDateTest){
-    {
-        std::ofstream file("test_record.csv");
-        file << "1,C++,abc,60\n";
-    }
+    writeCsv("1,C++,abc,60\n");
     StudyManager manager("test_record.csv");
     manager.loadFromFile();
     EXPECT_EQ(manager.getRecordCount(), 0);
-    {
-        std::ofstream file("test_record.csv");
-        file << "1,C++,2026/2/30,60\n";
-    }
+
+    writeCsv("1,C++,2026/2/30,60\n");
     manager.loadFromFile();
     EXPECT_EQ(manager.getRecordCount(), 0);
 }
 TEST_F(StudyManagerTest, LoadSkipsInvalidRecord){
-    {
-        std::ofstream file("test_record.csv");
-        file << "1,C++,2026/8/30,60\n";
-        file << "2,Docker,abc,90\n";
-        file << "3,CMake,2026/9/3,90\n";
-    }
+    writeCsv("1,C++,2026/8/30,60\n"
+            "2,Docker,abc,90\n"
+            "3,CMake,2026/9/3,90\n");
     StudyManager manager("test_record.csv");
     manager.loadFromFile();
 
@@ -216,28 +209,19 @@ TEST_F(StudyManagerTest, LoadSkipsInvalidRecord){
     EXPECT_NE(manager.findRecordByID(3),nullptr);
 }
 TEST_F(StudyManagerTest, LoadMissingColumn){
-    {
-        std::ofstream file("test_record.csv");
-        file << "1,C++,2026/8/30\n";
-    }
+    writeCsv("1,C++,2026/8/30\n");
     StudyManager manager("test_record.csv");
     manager.loadFromFile();
     EXPECT_EQ(manager.getRecordCount(),0);
 }
 TEST_F(StudyManagerTest, LoadExtraColumn){
-    {
-        std::ofstream file("test_record.csv");
-        file << "2,Docker,2026/8/31,90,abc";
-    }
+    writeCsv("2,Docker,2026/8/31,90,abc");
     StudyManager manager("test_record.csv");
     manager.loadFromFile();
     EXPECT_EQ(manager.getRecordCount(),0);
 }
 TEST_F(StudyManagerTest, LoadExtraEmptyColumn){
-    {
-        std::ofstream file("test_record.csv");
-        file << "2,Docker,2026/8/31,90,";
-    }
+    writeCsv("2,Docker,2026/8/31,90,");
     StudyManager manager("test_record.csv");
     manager.loadFromFile();
     EXPECT_EQ(manager.getRecordCount(),0);   
@@ -255,26 +239,18 @@ TEST_F(StudyManagerTest, SortMinutesDescTest){
     std::string minutes;
     std::ifstream file("test_record.csv");
 
-    std::getline(file,id,',');
-    std::getline(file,content,',');
-    std::getline(file,date,',');
-    std::getline(file,minutes,'\n'); 
+    getLineFromFile(file,id,content,date,minutes);
+
     EXPECT_EQ(id,"2");
     EXPECT_EQ(content,"Docker");
     EXPECT_EQ(date,"2026/8/31");
     EXPECT_EQ(minutes,"120");
-    std::getline(file,id,',');
-    std::getline(file,content,',');
-    std::getline(file,date,',');
-    std::getline(file,minutes,'\n');
+    getLineFromFile(file,id,content,date,minutes);
     EXPECT_EQ(id,"3");
     EXPECT_EQ(content,"CMake");
     EXPECT_EQ(date,"2026/9/1");
     EXPECT_EQ(minutes,"80");
-    std::getline(file,id,',');
-    std::getline(file,content,',');
-    std::getline(file,date,',');
-    std::getline(file,minutes,'\n');
+    getLineFromFile(file,id,content,date,minutes);
     EXPECT_EQ(id,"1");
     EXPECT_EQ(content,"C++基礎");
     EXPECT_EQ(date,"2026/8/28");
@@ -293,26 +269,17 @@ TEST_F(StudyManagerTest, SortMinutesAscTest){
     std::string minutes;
     std::ifstream file("test_record.csv");
 
-    std::getline(file,id,',');
-    std::getline(file,content,',');
-    std::getline(file,date,',');
-    std::getline(file,minutes,'\n'); 
+    getLineFromFile(file,id,content,date,minutes);
     EXPECT_EQ(id,"3");
     EXPECT_EQ(content,"CMake");
     EXPECT_EQ(date,"2026/9/1");
     EXPECT_EQ(minutes,"60");
-    std::getline(file,id,',');
-    std::getline(file,content,',');
-    std::getline(file,date,',');
-    std::getline(file,minutes,'\n');
+    getLineFromFile(file,id,content,date,minutes);
     EXPECT_EQ(id,"1");
     EXPECT_EQ(content,"C++基礎");
     EXPECT_EQ(date,"2026/8/28");
     EXPECT_EQ(minutes,"80");
-    std::getline(file,id,',');
-    std::getline(file,content,',');
-    std::getline(file,date,',');
-    std::getline(file,minutes,'\n');
+    getLineFromFile(file,id,content,date,minutes);
     EXPECT_EQ(id,"2");
     EXPECT_EQ(content,"Docker");
     EXPECT_EQ(date,"2026/8/31");
@@ -358,34 +325,22 @@ TEST_F(StudyManagerTest, SortByDateDescTest){
     std::string minutes;
     std::ifstream file("test_record.csv");
 
-    std::getline(file,id,',');
-    std::getline(file,content,',');
-    std::getline(file,date,',');
-    std::getline(file,minutes,'\n'); 
+    getLineFromFile(file,id,content,date,minutes);
     EXPECT_EQ(id,"4");
     EXPECT_EQ(content,"C++");
     EXPECT_EQ(date,"2026/9/4");
     EXPECT_EQ(minutes,"35");
-    std::getline(file,id,',');
-    std::getline(file,content,',');
-    std::getline(file,date,',');
-    std::getline(file,minutes,'\n'); 
+    getLineFromFile(file,id,content,date,minutes);
     EXPECT_EQ(id,"1");
     EXPECT_EQ(content,"C++基礎");
     EXPECT_EQ(date,"2026/9/1");
     EXPECT_EQ(minutes,"80");
-    std::getline(file,id,',');
-    std::getline(file,content,',');
-    std::getline(file,date,',');
-    std::getline(file,minutes,'\n'); 
+    getLineFromFile(file,id,content,date,minutes);
     EXPECT_EQ(id,"3");
     EXPECT_EQ(content,"CMake");
     EXPECT_EQ(date,"2026/8/31");
     EXPECT_EQ(minutes,"60");
-    std::getline(file,id,',');
-    std::getline(file,content,',');
-    std::getline(file,date,',');
-    std::getline(file,minutes,'\n'); 
+    getLineFromFile(file,id,content,date,minutes);
     EXPECT_EQ(id,"2");
     EXPECT_EQ(content,"Docker");
     EXPECT_EQ(date,"2026/8/28");
@@ -405,34 +360,22 @@ TEST_F(StudyManagerTest, SortByDateAscTest){
     std::string minutes;
     std::ifstream file("test_record.csv");
 
-    std::getline(file,id,',');
-    std::getline(file,content,',');
-    std::getline(file,date,',');
-    std::getline(file,minutes,'\n'); 
+    getLineFromFile(file,id,content,date,minutes);
     EXPECT_EQ(id,"2");
     EXPECT_EQ(content,"Docker");
     EXPECT_EQ(date,"2026/8/28");
     EXPECT_EQ(minutes,"120");
-    std::getline(file,id,',');
-    std::getline(file,content,',');
-    std::getline(file,date,',');
-    std::getline(file,minutes,'\n'); 
+    getLineFromFile(file,id,content,date,minutes);
     EXPECT_EQ(id,"3");
     EXPECT_EQ(content,"CMake");
     EXPECT_EQ(date,"2026/8/31");
     EXPECT_EQ(minutes,"60");
-    std::getline(file,id,',');
-    std::getline(file,content,',');
-    std::getline(file,date,',');
-    std::getline(file,minutes,'\n'); 
+    getLineFromFile(file,id,content,date,minutes);
     EXPECT_EQ(id,"1");
     EXPECT_EQ(content,"C++基礎");
     EXPECT_EQ(date,"2026/9/1");
     EXPECT_EQ(minutes,"80");
-    std::getline(file,id,',');
-    std::getline(file,content,',');
-    std::getline(file,date,',');
-    std::getline(file,minutes,'\n'); 
+    getLineFromFile(file,id,content,date,minutes);
     EXPECT_EQ(id,"4");
     EXPECT_EQ(content,"C++");
     EXPECT_EQ(date,"2026/9/4");
