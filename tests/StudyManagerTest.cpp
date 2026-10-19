@@ -403,3 +403,11 @@ TEST_F(StudyManagerTest, SumtimeByContentsInPeriodTest){
        manager.sumtimeByContentsInPeriod("2026/9/5", "2026/9/6");
     EXPECT_EQ(sumtime.size(),0);
 }
+TEST_F(StudyManagerTest, FailedOpenFileTest){
+    StudyManager manager("not_exist_directry/study_records");
+
+    manager.addRecord("C++","2026/10/19",60);
+    EXPECT_EQ(manager.getRecordCount(),1);
+    manager.loadFromFile();
+    EXPECT_EQ(manager.getRecordCount(),1);
+}

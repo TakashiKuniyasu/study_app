@@ -56,55 +56,21 @@ void StudyManager::showTotalMinutes() const{
     std::cout << "総学習時間" << getTotalMinutes() << "分\n";
 }
 void StudyManager::saveToFile() const{
-    std::ofstream file(fileName);
-
-    for(const auto& record : records){
-        file << record.getID() << ",";
-        file << record.getContent() << ",";
-        file << record.getDate() << ",";
-        file << record.getMinutes() << "\n";
-    }
+    CsvManager::saveToFile(fileName, records);
 }
 void StudyManager::loadFromFile(){
+    std::vector<StudyRecord> loadedRecords;
 
-    std::ifstream file(fileName);
-    if(!file){
-        std::cout << "ファイルオープンエラー" << std::endl;
+    if(!CsvManager::loadFromFile(fileName, loadedRecords)){
         return;
     }
-    records.clear();
+    records = loadedRecords;
     prevID = 0;
-    int idNum;
-    int minutesNum;
-    std::string tmp;
-    while(std::getline(file, tmp)){        
-        std::string id;
-        std::string content;
-        std::string date;
-        std::string minutes;
 
-        if(!CsvManager::parseCsvRecord
-            (id,content,date,minutes,tmp)){
-            continue;
+    for(const StudyRecord& record : records){
+        if(record.getID() > prevID){
+            prevID = record.getID();
         }
-
-        if(!CsvManager::csvIdCheck(id, idNum)){
-            continue;
-        }
-
-        if(!StudyRecord::checkDate(date)){
-            std::cout << "CSVの日付の値が適切ではありません" << std::endl;
-            continue;
-        }
-        if(!CsvManager::csvMinutesCheck(minutes, minutesNum)){
-            continue;
-        }
-
-        if(idNum > prevID){
-            prevID = idNum;
-        }
-        StudyRecord data(idNum,content,date,minutesNum);
-        records.push_back(data);
     }
 }
 std::vector<StudyRecord> StudyManager::searchContent(const std::string& word){
