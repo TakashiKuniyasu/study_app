@@ -52,7 +52,22 @@ target_link_libraries(
     GTest::gtest_main
 )
 
+add_executable(csv_manager_test
+    tests/CsvManagerTest.cpp
+    src/StudyRecord.cpp
+    src/CsvManager.cpp
+)
+
+target_include_directories(csv_manager_test PRIVATE include)
+
+target_link_libraries(
+    csv_manager_test
+    PRIVATE
+    GTest::gtest_main
+)
+
 include(GoogleTest)
 
 gtest_discover_tests(study_app_test)
 gtest_discover_tests(study_manager_test)
+gtest_discover_tests(csv_manager_test)

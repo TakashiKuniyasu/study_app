@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <fstream>
 #include <vector>
+#include <sstream>
 #include "CsvManager.hpp"
 #include "StudyRecord.hpp"
 

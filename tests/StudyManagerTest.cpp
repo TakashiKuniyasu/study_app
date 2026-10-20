@@ -153,31 +153,6 @@ TEST_F(StudyManagerTest, SearchContentNotFound){
     auto result = manager.searchContent("Python");
     EXPECT_TRUE(result.empty());
 }
-TEST_F(StudyManagerTest, LoadInvalidId){
-    writeCsv("abc,C++,2026/8/31,60\n");
-
-    StudyManager manager("test_record.csv");
-    EXPECT_NO_THROW(manager.loadFromFile());
-    EXPECT_EQ(manager.getRecordCount(), 0);
-
-    writeCsv("1abc,C++,2026/8/31,60\n");
-    EXPECT_NO_THROW(manager.loadFromFile());
-    EXPECT_EQ(manager.getRecordCount(), 0);
-}
-TEST_F(StudyManagerTest,InvalidMinutesTest){
-    writeCsv("1,C++,2026/8/31,abc\n");
-    StudyManager manager("test_record.csv");
-    EXPECT_NO_THROW(manager.loadFromFile());
-    EXPECT_EQ(manager.getRecordCount(), 0);
-
-    writeCsv("1,C++,2026/8/31,60abc\n");
-    EXPECT_NO_THROW(manager.loadFromFile());
-    EXPECT_EQ(manager.getRecordCount(), 0);
-
-    writeCsv("1,C++,2026/8/31,-10\n");
-    EXPECT_NO_THROW(manager.loadFromFile());
-    EXPECT_EQ(manager.getRecordCount(), 0);
-}
 TEST_F(StudyManagerTest,InvalidRecordDoesNotAffectNextId){
     writeCsv("100,C++,2026/8/31,abc\n");
     StudyManager manager("test_record.csv");
@@ -185,46 +160,6 @@ TEST_F(StudyManagerTest,InvalidRecordDoesNotAffectNextId){
 
     manager.addRecord("Docker", "2026/9/1", 60);
     EXPECT_NE(manager.findRecordByID(1), nullptr);
-}
-TEST_F(StudyManagerTest, InvalidDateTest){
-    writeCsv("1,C++,abc,60\n");
-    StudyManager manager("test_record.csv");
-    manager.loadFromFile();
-    EXPECT_EQ(manager.getRecordCount(), 0);
-
-    writeCsv("1,C++,2026/2/30,60\n");
-    manager.loadFromFile();
-    EXPECT_EQ(manager.getRecordCount(), 0);
-}
-TEST_F(StudyManagerTest, LoadSkipsInvalidRecord){
-    writeCsv("1,C++,2026/8/30,60\n"
-            "2,Docker,abc,90\n"
-            "3,CMake,2026/9/3,90\n");
-    StudyManager manager("test_record.csv");
-    manager.loadFromFile();
-
-    EXPECT_EQ(manager.getRecordCount(),2);
-    EXPECT_NE(manager.findRecordByID(1),nullptr);
-    EXPECT_EQ(manager.findRecordByID(2),nullptr);
-    EXPECT_NE(manager.findRecordByID(3),nullptr);
-}
-TEST_F(StudyManagerTest, LoadMissingColumn){
-    writeCsv("1,C++,2026/8/30\n");
-    StudyManager manager("test_record.csv");
-    manager.loadFromFile();
-    EXPECT_EQ(manager.getRecordCount(),0);
-}
-TEST_F(StudyManagerTest, LoadExtraColumn){
-    writeCsv("2,Docker,2026/8/31,90,abc");
-    StudyManager manager("test_record.csv");
-    manager.loadFromFile();
-    EXPECT_EQ(manager.getRecordCount(),0);
-}
-TEST_F(StudyManagerTest, LoadExtraEmptyColumn){
-    writeCsv("2,Docker,2026/8/31,90,");
-    StudyManager manager("test_record.csv");
-    manager.loadFromFile();
-    EXPECT_EQ(manager.getRecordCount(),0);   
 }
 TEST_F(StudyManagerTest, SortMinutesDescTest){
     StudyManager manager("test_record.csv");
