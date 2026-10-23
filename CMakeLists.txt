@@ -13,12 +13,20 @@ FetchContent_MakeAvailable(googletest)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+find_package(SQLite3 REQUIRED)
+
 add_executable(study_app
     src/main.cpp
     src/StudyRecord.cpp
     src/StudyManager.cpp
     src/MainManager.cpp
     src/CsvManager.cpp
+    src/SqliteManager.cpp
+)
+
+target_link_libraries(study_app
+    PRIVATE
+    SQLite::SQLite3
 )
 
 target_include_directories(study_app PRIVATE include)

@@ -19,8 +19,8 @@ enum class Month{
 class StudyRecord{
 private:
     int ID;
-    std::string date;
     std::string content;
+    std::string date;
     int minute;
     static bool checkDateYear(std::stringstream&, int&);
     static bool checkDateMonth(std::stringstream&, int&);
